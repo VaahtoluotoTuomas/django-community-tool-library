@@ -18,6 +18,9 @@
                 {% if user.is_authenticated %}
                     <span class="text-gray-300 text-sm hidden md:inline">Hei, <strong class="text-white">
                         {{ user.username }}</strong>!</span>
+                    <a href="{% url 'omat_lainat' %}" class="text-blue-400 hover:text-blue-300 transition-colors text-sm font-bold">
+                        Omat lainat
+                    </a>
                 
                     <form method="POST" action="{% url 'kirjaudu_ulos' %}" class="inline m-0">
                         {% csrf_token %}

@@ -1,8 +1,11 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Tool
+from .models import Tool, Loan
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
+from django.utils import timezone
+from datetime import timedelta
 
 def tyokalu_lista(request):
     tyokalut = Tool.objects.all().prefetch_related('manufacturers', 'tags')
@@ -23,3 +26,27 @@ def rekisteroidy(request):
             form = UserCreationForm()
         
     return render(request, 'tyokalut/rekisteroidy.html', {'form': form})
+
+@login_required
+def lainaa_tyokalu(request, tyokalu_id):
+    if request.method == 'POST':
+        tyokalu = get_object_or_404(Tool, id=tyokalu_id)
+
+        onko_lainassa = Loan.objects.filter(tool=tyokalu, returned_at__isnull=True).exists()
+
+        if not onko_lainassa:
+               erapaiva = timezone.now() + timedelta(days=14)
+
+               Loan.objects.create(
+                    user=request.user,
+                    tool=tyokalu,
+                    due_date=erapaiva
+               )
+        return redirect('tyokalu_tiedot', tyokalu_id=tyokalu.id)
+    
+    return redirect('tyokalu_lista')
+
+@login_required
+def omat_lainat(request):
+     lainat = Loan.objects.filter(user=request.user).order_by('-borrowed_at')
+     return render(request, 'tyokalut/omat_lainat.html', {'lainat': lainat})
