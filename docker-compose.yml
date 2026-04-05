@@ -1,0 +1,17 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: tool_library_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: tool_library
+      MYSQL_USER: django_user
+      MYSQL_PASSWORD: dev_password123
+      MYSQL_ROOT_PASSWORD: root_password123
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
