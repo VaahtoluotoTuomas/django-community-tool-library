@@ -25,6 +25,10 @@ class Tool(models.Model):
 
     def __str__(self):
         return self.name
+    
+    @property
+    def is_available(self):
+        return not self.loan_set.filter(returned_at__isnull=True).exists()
 
 class Loan(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

@@ -1,44 +1,76 @@
 <div class="bg-brand-surface rounded-xl shadow-lg overflow-hidden hover:shadow-2xl
- hover:shadow-brand-primary-dark/20 transition-all duration-300 border border-brand-border-muted">
-    <div class="p-6">
+ hover:shadow-brand-primary-dark/20 transition-all duration-300 border border-brand-border-muted flex flex-col h-full">
+ 
+    {% if tyokalu.image %}
+        <img src="{{ tyokalu.image.url }}" alt="Kuva työkalusta {{ tyokalu.name }}" 
+        class="w-full h-48 object-cover border-b border-brand-border-muted">
+    {% else %}
+        <div class="w-full h-48 bg-brand-border-muted flex items-center justify-center 
+        border-b border-brand-border-muted text-brand-text-muted">
+            <svg class="w-12 h-12 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path 
+                stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 
+                20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>        
+        </div>
+    {% endif %}
+
+    <div class="p-6 flex flex-col flex-grow">
         <div class="flex justify-between items-start mb-2">
-            <h2 class="text-xl font-bold text-brand-text-main">{{ tyokalu.name }}</h2>
+            <div>
+                <h2 class="text-xl font-bold text-brand-text-main">{{ tyokalu.name }}</h2>
+
+                <div class="flex items-center gap-1.5 mt-1">
+                    {% if tyokalu.is_available %}
+                        <span class="w-2 h-2 rounded-full bg-brand-success"></span>
+                        <span class="text-[10px] uppercase tracking-wider font-bold text-brand-success-light">
+                            Vapaana
+                        </span>
+                    {% else %}
+                        <span class="w-2 h-2 rounded-full bg-brand-danger"></span>
+                        <span class="text-[10px] uppercase tracking-wider font-bold text-brand-danger-light">
+                            Lainassa
+                        </span>
+                    {% endif %}
+                </div>
+             </div>   
+
             <span class="text-sm font-medium text-brand-text-muted bg-brand-border-muted 
             px-2 py-1 rounded border border-brand-border">
                 {{ tyokalu.acquisition_year }}
             </span>
         </div>
 
-        <p class="text-brand-text-muted text-sm mb-4 line-clamp-2">
+        <p class="text-brand-text-muted text-sm line-clamp-2">
             {{ tyokalu.description }}
         </p>
 
-        <div class="mb-4">
-            <span class="text-xs font-semibold text-brand-text-muted uppercase tracking-tight">Valmistajat:</span>
-            <div class="flex flex-wrap gap-2 mt-1">
-                {% for m in tyokalu.manufacturers.all %}
-                    {% include 'tyokalut/components/badge.html' with text=m.name %}
-                {% endfor %}
+        <div class="mt-auto pt-4">
+            
+            <div class="mb-4">
+                <span class="text-xs font-semibold text-brand-text-muted uppercase tracking-tight">Valmistajat:</span>
+                <div class="flex flex-wrap gap-2 mt-1">
+                    {% for m in tyokalu.manufacturers.all %}
+                        {% include 'tyokalut/components/badge.html' with text=m.name %}
+                    {% endfor %}
+                </div>
             </div>
+
+            <div>
+                {% if show_return %}
+                    <form method="post" action="#"> {% csrf_token %}
+                        <button type="submit" class="block w-full text-center bg-brand-danger hover:bg-brand-danger-hover text-brand-text-main font-bold py-2 px-4 rounded-lg transition-colors border border-brand-danger-hover">
+                            Palauta työkalu
+                        </button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'tyokalu_tiedot' tyokalu.id %}" class="block text-center w-full bg-brand-primary
+                    hover:bg-brand-primary-hover text-brand-text-main font-bold py-2 px-4 rounded-lg transition-colors 
+                    border border-brand-primary-hover hover:border-brand-primary-light">
+                        Lue lisää
+                    </a>
+                {% endif %}
+            </div>
+
         </div>
-
-        {% if show_return %}
-
-            <form method="post" action="#"> {% csrf_token %}
-                <button type="submit" class="block w-full text-center bg-brand-danger hover:bg-brand-danger-hover text-brand-text-main font-bold py-2 px-4 rounded-lg transition-colors border border-brand-danger-hover">
-                    Palauta työkalu
-                </button>
-            </form>
-
-        {% else %}
-
-        <a href="{% url 'tyokalu_tiedot' tyokalu.id %}" class="block text-center w-full bg-brand-primary
-         hover:bg-brand-primary-hover text-brand-text-main font-bold py-2 px-4 rounded-lg transition-colors 
-         border border-brand-primary-hover hover:border-brand-primary-light">
-            Lue lisää
-        </a>
-
-        {% endif %}
-
     </div>
-    </div>
+</div>

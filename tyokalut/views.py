@@ -14,7 +14,18 @@ def tyokalu_lista(request):
 
 def tyokalu_tiedot(request, tyokalu_id):
     tyokalu = get_object_or_404(Tool, id=tyokalu_id)
-    return render(request, 'tyokalut/tiedot.html', {'tyokalu': tyokalu})
+
+    aktiivinen_laina = Loan.objects.filter(tool=tyokalu, returned_at__isnull=True).first()
+
+    on_vapaana = aktiivinen_laina is None
+
+    context = {
+        'tyokalu': tyokalu,
+        'on_vapaana': on_vapaana,
+        'aktiivinen_laina': aktiivinen_laina
+        }
+
+    return render(request, 'tyokalut/tiedot.html', context)
 
 def rekisteroidy(request):
     if request.method == 'POST':
@@ -36,13 +47,18 @@ def lainaa_tyokalu(request, tyokalu_id):
         onko_lainassa = Loan.objects.filter(tool=tyokalu, returned_at__isnull=True).exists()
 
         if not onko_lainassa:
-               erapaiva = timezone.now() + timedelta(days=14)
+            erapaiva = timezone.now() + timedelta(days=14)
 
-               Loan.objects.create(
-                    user=request.user,
-                    tool=tyokalu,
-                    due_date=erapaiva
-               )
+            Loan.objects.create(
+                user=request.user,
+                tool=tyokalu,
+                due_date=erapaiva
+            )
+            messages.success(request, f'Työkalu "{tyokalu.name}" lainattu! Löydät sen Omat lainat -sivulta.')
+        
+        else:
+            messages.error(request, 'Pahoittelut, työkalu ehti juuri mennä toiselle lainaajalle.')
+        
         return redirect('tyokalu_tiedot', tyokalu_id=tyokalu.id)
     
     return redirect('tyokalu_lista')

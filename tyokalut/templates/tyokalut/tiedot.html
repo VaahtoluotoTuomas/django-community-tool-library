@@ -8,6 +8,12 @@
     </a>
 
     <div class="bg-brand-surface rounded-xl shadow-2xl overflow-hidden border border-brand-border-muted p-8">
+        
+        {% if tyokalu.image %}
+            <div class="mb-8 border border-brand-border-muted rounded-xl overflow-hidden shadow-inner bg-brand-bg">
+                <img src="{{ tyokalu.image.url }}" alt="Kuva työkalusta {{ tyokalu.name }}" class="w-full h-80 md:h-96 object-cover">
+            </div>
+        {% endif %}
         <div class="flex justify-between items-start mb-6">
             <h1 class="text-4xl font-extrabold text-brand-text-main">{{ tyokalu.name }}</h1>
             <span class="text-lg font-medium text-brand-text-muted bg-brand-border-muted px-3 py-1 rounded border border-brand-border">
@@ -47,25 +53,38 @@
 
         <div class="border-t border-brand-border-muted pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
             
-            <div class="flex items-center gap-2">
-                <span class="w-3 h-3 rounded-full bg-brand-success-hover"></span>
-                <span class="text-brand-success-light font-semibold">Tällä hetkellä vapaana</span>
-            </div>
+            {% if on_vapaana %}
+                <div class="flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-brand-success shadow-[0_0_8px_rgba(34,197,94,0.6)]"></span>
+                    <span class="text-brand-success-light font-semibold">Tällä hetkellä vapaana</span>
+                </div>
 
-            {% if user.is_authenticated %}
-                <form method="POST" action="{% url 'lainaa_tyokalu' tyokalu.id %}" class="m-0">
-                    {% csrf_token %}
-                    <button type="submit" class="w-full md:w-auto bg-brand-success hover:bg-brand-success-hover text-brand-text-main font-bold 
-                    py-3 px-8 rounded-lg transition-colors border border-brand-success-hover">
-                        Lainaa työkalu
-                    </button>
-                </form>
+                {% if user.is_authenticated %}
+                    <form method="POST" action="{% url 'lainaa_tyokalu' tyokalu.id %}" class="m-0">
+                        {% csrf_token %}
+                        <button type="submit" class="w-full md:w-auto bg-brand-success hover:bg-brand-success-hover text-brand-text-main font-bold 
+                        py-3 px-8 rounded-lg transition-colors border border-brand-success-hover">
+                            Lainaa työkalu
+                        </button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'kirjaudu' %}" class="text-brand-text-muted hover:text-brand-primary-light text-sm italic">
+                        Kirjaudu sisään lainataksesi
+                    </a>
+                {% endif %}
             {% else %}
-            <button disabled class="w-full md:w-auto bg-brand-border text-brand-text-muted font-bold py-3 px-8 rounded-lg 
-            cursor-not-allowed border border-brand-text-muted">
-                Lainaus vaatii kirjautumisen
-            </button>
-            {% endif %}
+                <div class="flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-brand-danger shadow-[0_0_8px_rgba(239,68,68,0.6)]"></span>
+                    <div class="flex flex-col">
+                        <span class="text-brand-danger-light font-semibold">Lainassa</span>
+                        <span class="text-brand-text-muted text-xs">Lainaaja: {{ aktiivinen_laina.user.username }}</span>
+                    </div>
+                </div>
+
+                <button disabled class="w-full md:w-auto bg-brand-surface text-brand-text-muted font-bold py-3 px-8 rounded-lg cursor-not-allowed border border-brand-border opacity-60">
+                    Työkalu on jo lainassa
+                </button>
+            {% endif %}    
         </div>
     </div>
 </div>
