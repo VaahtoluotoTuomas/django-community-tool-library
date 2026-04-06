@@ -6,6 +6,7 @@ from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from datetime import timedelta
+from django.contrib import messages
 
 def tyokalu_lista(request):
     tyokalut = Tool.objects.all().prefetch_related('manufacturers', 'tags')
@@ -45,6 +46,18 @@ def lainaa_tyokalu(request, tyokalu_id):
         return redirect('tyokalu_tiedot', tyokalu_id=tyokalu.id)
     
     return redirect('tyokalu_lista')
+
+@login_required
+def palauta_tyokalu(request, laina_id):
+    if request.method == 'POST':
+        laina = get_object_or_404(Loan, id=laina_id, user=request.user)
+
+        if not laina.returned_at:
+             laina.returned_at = timezone.now()
+             laina.save()
+             messages.success(request, f'Työkalu "{laina.tool.name}" palautettu onnistuneesti.')
+    return redirect('omat_lainat')
+    
 
 @login_required
 def omat_lainat(request):

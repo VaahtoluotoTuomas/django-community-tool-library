@@ -1,0 +1,44 @@
+<div class="bg-brand-surface rounded-xl shadow-lg overflow-hidden hover:shadow-2xl
+ hover:shadow-brand-primary-dark/20 transition-all duration-300 border border-brand-border-muted">
+    <div class="p-6">
+        <div class="flex justify-between items-start mb-2">
+            <h2 class="text-xl font-bold text-brand-text-main">{{ tyokalu.name }}</h2>
+            <span class="text-sm font-medium text-brand-text-muted bg-brand-border-muted 
+            px-2 py-1 rounded border border-brand-border">
+                {{ tyokalu.acquisition_year }}
+            </span>
+        </div>
+
+        <p class="text-brand-text-muted text-sm mb-4 line-clamp-2">
+            {{ tyokalu.description }}
+        </p>
+
+        <div class="mb-4">
+            <span class="text-xs font-semibold text-brand-text-muted uppercase tracking-tight">Valmistajat:</span>
+            <div class="flex flex-wrap gap-2 mt-1">
+                {% for m in tyokalu.manufacturers.all %}
+                    {% include 'tyokalut/components/badge.html' with text=m.name %}
+                {% endfor %}
+            </div>
+        </div>
+
+        {% if show_return %}
+
+            <form method="post" action="#"> {% csrf_token %}
+                <button type="submit" class="block w-full text-center bg-brand-danger hover:bg-brand-danger-hover text-brand-text-main font-bold py-2 px-4 rounded-lg transition-colors border border-brand-danger-hover">
+                    Palauta työkalu
+                </button>
+            </form>
+
+        {% else %}
+
+        <a href="{% url 'tyokalu_tiedot' tyokalu.id %}" class="block text-center w-full bg-brand-primary
+         hover:bg-brand-primary-hover text-brand-text-main font-bold py-2 px-4 rounded-lg transition-colors 
+         border border-brand-primary-hover hover:border-brand-primary-light">
+            Lue lisää
+        </a>
+
+        {% endif %}
+
+    </div>
+    </div>

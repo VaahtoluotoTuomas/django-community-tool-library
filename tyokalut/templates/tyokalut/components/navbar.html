@@ -1,0 +1,40 @@
+<nav class="bg-brand-surface border-b border-brand-border-muted text-brand-text-main p-4 shadow-lg mb-8">
+    <div class="container mx-auto flex justify-between items-center">
+        <a href="{% url 'tyokalu_lista' %}" class="text-2xl font-bold uppercase 
+        tracking-wider hover:text-brand-primary-light transition-colors">🛠️ Lainaamo</a>
+        <div class="flex items-center gap-4">
+
+            {% if user.is_authenticated %}
+                <span class="text-brand-text-muted text-sm hidden md:inline">Hei, <strong class="text-brand-text-main">
+                    {{ user.username }}</strong>!</span>
+                <a href="{% url 'omat_lainat' %}" class="text-brand-primary-light hover:text-brand-primary-ultralight transition-colors text-sm font-bold">
+                    Omat lainat
+                </a>
+            
+                <form method="POST" action="{% url 'kirjaudu_ulos' %}" class="inline m-0">
+                    {% csrf_token %}
+                    <button type="submit" class="bg-brand-border-muted hover:bg-brand-border-muted text-brand-text-muted hover:text-brand-text-main text-sm 
+                    font-bold py-2 px-4 rounded-lg transition-colors border border-brand-border">
+                        Kirjaudu ulos
+                    </button>
+                </form>
+
+            {% else %}
+                <a href="{% url 'kirjaudu' %}" class="text-brand-text-muted hover:text-brand-text-main 
+                transition-colors text-sm font-medium">Kirjaudu</a>
+                <a href="{% url 'rekisteroidy' %}" class="bg-brand-primary hover:bg-brand-primary-hover
+                    text-brand-text-main text-sm font-bold py-2 px-4 rounded-lg transition-colors border border-brand-primary-hover">
+                Rekisteröidy
+                </a>
+            {% endif %}
+
+            {% if user.is_staff %}
+            <div class="border-l border-brand-border pl-4 ml-2">
+                <a href="/admin" class="text-brand-text-muted hover:text-brand-text-main text-sm font-medium transition-colors">
+                    Ylläpito
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</nav>

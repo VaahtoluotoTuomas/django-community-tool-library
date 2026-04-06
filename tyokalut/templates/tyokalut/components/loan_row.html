@@ -1,0 +1,41 @@
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center p-4 rounded-lg border 
+    {% if laina.returned_at %}bg-brand-bg border-brand-border-muted{% else %}bg-brand-surface border-brand-primary-hover/30{% endif %}">
+
+        <div class="mb-4 md:mb-0">
+            <h3 class="text-xl font-bold text-brand-text-main mb-1">
+                <a href="{% url 'tyokalu_tiedot' laina.tool.id %}" class="hover:text-brand-primary-light transition-colors">
+                    {{ laina.tool.name }}
+                </a>
+            </h3>
+            <div class="text-sm text-brand-text-muted space-y-1">
+                <p>Lainattu: {{ laina.borrowed_at|date:"d.m.Y H:i" }}</p>
+                <p>Eräpäivä: <span class="{% if not laina.returned_at %}text-brand-warning-500{% endif %}">
+                    {{ laina.due_date|date:"d.m.Y" }}</span></p>
+            </div>
+        </div>
+
+        <div class="flex items-center">
+            {% if laina.returned_at %}
+                <span class="bg-brand-border-muted text-brand-text-muted px-4 py-2 rounded-lg font-semibold border border-brand-border text-sm">
+                    Palautettu {{ laina.returned_at|date:"d.m.Y" }}
+                </span>
+            {% else %}
+                <div class="flex items-center gap-3">
+                    <span class="bg-brand-success-dark/30 text-brand-success-light px-4 py-2 rounded-lg font-semibold border
+                     border-brand-success-dark/50 text-sm">
+                        Lainassa
+                    </span>
+
+                    <form method="post" action="{% url 'palauta_tyokalu' laina.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="bg-brand-surface-hover text-brand-text-main px-4 py-2 rounded-lg font-semibold border
+                         border-brand-border hover:border-brand-primary-light hover:text-brand-primary-light transition-colors 
+                         text-sm shadow-sm hover:shadow-md">
+                            Palauta
+                        </button>
+                    </form>
+                </div>
+
+            {% endif %}
+        </div>
+    </div>

@@ -7,48 +7,11 @@
     <title>Lainaamo</title>
     <link rel="stylesheet" href="{% static 'tyokalut/css/output.css' %}">
 </head>
-<body class="bg-gray-900 min-h-screen">
+<body class="bg-brand-bg min-h-screen">
 
-    <nav class="bg-gray-800 border-b border-gray-700 text-white p-4 shadow-lg mb-8">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="{% url 'tyokalu_lista' %}" class="text-2xl font-bold uppercase 
-            tracking-wider hover:text-blue-400 transition-colors">🛠️ Lainaamo</a>
-            <div class="flex items-center gap-4">
+    {% include 'tyokalut/components/navbar.html' %}
 
-                {% if user.is_authenticated %}
-                    <span class="text-gray-300 text-sm hidden md:inline">Hei, <strong class="text-white">
-                        {{ user.username }}</strong>!</span>
-                    <a href="{% url 'omat_lainat' %}" class="text-blue-400 hover:text-blue-300 transition-colors text-sm font-bold">
-                        Omat lainat
-                    </a>
-                
-                    <form method="POST" action="{% url 'kirjaudu_ulos' %}" class="inline m-0">
-                        {% csrf_token %}
-                        <button type="submit" class="bg-gray-700 hover:bg-gray-700 text-gray-300 hover:text-white text-sm 
-                        font-bold py-2 px-4 rounded-lg transition-colors border border-gray-600">
-                            Kirjaudu ulos
-                        </button>
-                    </form>
-
-                {% else %}
-                    <a href="{% url 'kirjaudu' %}" class="text-gray-300 hover:text-white 
-                    transition-colors text-sm font-medium">Kirjaudu</a>
-                    <a href="{% url 'rekisteroidy' %}" class="bg-blue-600 hover:bg-blue-500
-                     text-white text-sm font-bold py-2 px-4 rounded-lg transition-colors border border-blue-500">
-                    Rekisteröidy
-                    </a>
-                {% endif %}
-
-                {% if user.is_staff %}
-                <div class="border-l border-gray-600 pl-4 ml-2">
-                    <a href="/admin" class="text-gray-400 hover:text-white text-sm font-medium transition-colors">
-                        Ylläpito
-                    </a>
-                </div>
-                {% endif %}
-            </div>
-        </div>
-    </nav>
+    {% include 'tyokalut/components/alerts.html' %}
 
     <main class="container mx-auto px-4 pb-12">
         {% block content %}

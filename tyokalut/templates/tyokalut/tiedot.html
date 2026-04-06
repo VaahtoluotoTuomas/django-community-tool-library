@@ -3,68 +3,66 @@
 {% block content %}
 <div class="max-w-4xl mx-auto mt-8">
     
-    <a href="{% url 'tyokalu_lista' %}" class="text-blue-400 hover:text-blue-300 font-semibold transition-colors mb-6 inline-block">
+    <a href="{% url 'tyokalu_lista' %}" class="text-brand-primary-light hover:text-brand-primary-ultralight font-semibold transition-colors mb-6 inline-block">
         &larr; Takaisin listaukseen
     </a>
 
-    <div class="bg-gray-800 rounded-xl shadow-2xl overflow-hidden border border-gray-700 p-8">
+    <div class="bg-brand-surface rounded-xl shadow-2xl overflow-hidden border border-brand-border-muted p-8">
         <div class="flex justify-between items-start mb-6">
-            <h1 class="text-4xl font-extrabold text-white">{{ tyokalu.name }}</h1>
-            <span class="text-lg font-medium text-gray-300 bg-gray-700 px-3 py-1 rounded border border-gray-600">
+            <h1 class="text-4xl font-extrabold text-brand-text-main">{{ tyokalu.name }}</h1>
+            <span class="text-lg font-medium text-brand-text-muted bg-brand-border-muted px-3 py-1 rounded border border-brand-border">
                 Hankittu: {{ tyokalu.acquisition_year }}
             </span>
         </div>
 
-        <p class="text-gray-300 text-lg mb-8 leading-relaxed">
+        <p class="text-brand-text-muted text-lg mb-8 leading-relaxed">
             {{ tyokalu.description }}
         </p>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+        <div class="flex flex-col md:flex-row gap-8 md:gap-16 mb-10">
+    
             <div>
-                <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-tight mb-2">Valmistajat:</h3>
+                <h3 class="text-sm font-semibold text-brand-text-muted uppercase tracking-tight mb-2">Valmistajat:</h3>
                 <div class="flex flex-wrap gap-2">
                     {% for m in tyokalu.manufacturers.all %}
-                        <span class="bg-blue-900/30 text-blue-300 px-3 py-1.5 rounded-full border border-blue-800/50">
-                            {{ m.name }}
-                        </span>
+                        {% include 'tyokalut/components/badge.html' with text=m.name %}
                     {% empty %}
-                        <span class="text-gray-500 italic">Ei valmistajatietoa</span>
+                        <span class="text-brand-text-muted italic text-sm">Ei valmistajatietoa</span>
                     {% endfor %}
                 </div>
             </div>
 
             <div>
-                <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-tight mb-2">Tagit:</h3>
+                <h3 class="text-sm font-semibold text-brand-text-muted uppercase tracking-tight mb-2">Tagit:</h3>
                 <div class="flex flex-wrap gap-2">
                     {% for t in tyokalu.tags.all %}
-                        <span class="bg-gray-700 text-gray-300 px-3 py-1.5 rounded-full border border-gray-600">
-                            {{ t.name }}
-                        </span>
+                        {% include 'tyokalut/components/badge.html' with text=t.name %}
                     {% empty %}
-                        <span class="text-gray-500 italic">Ei tageja</span>
+                        <span class="text-brand-text-muted italic text-sm">Ei tageja</span>
                     {% endfor %}
                 </div>
             </div>
+            
         </div>
 
-        <div class="border-t border-gray-700 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="border-t border-brand-border-muted pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
             
             <div class="flex items-center gap-2">
-                <span class="w-3 h-3 rounded-full bg-green-500"></span>
-                <span class="text-green-400 font-semibold">Tällä hetkellä vapaana</span>
+                <span class="w-3 h-3 rounded-full bg-brand-success-hover"></span>
+                <span class="text-brand-success-light font-semibold">Tällä hetkellä vapaana</span>
             </div>
 
             {% if user.is_authenticated %}
                 <form method="POST" action="{% url 'lainaa_tyokalu' tyokalu.id %}" class="m-0">
                     {% csrf_token %}
-                    <button type="submit" class="w-full md:w-auto bg-green-600 hover:bg-green-500 text-white font-bold 
-                    py-3 px-8 rounded-lg transition-colors border border-green-500">
+                    <button type="submit" class="w-full md:w-auto bg-brand-success hover:bg-brand-success-hover text-brand-text-main font-bold 
+                    py-3 px-8 rounded-lg transition-colors border border-brand-success-hover">
                         Lainaa työkalu
                     </button>
                 </form>
             {% else %}
-            <button disabled class="w-full md:w-auto bg-gray-600 text-gray-400 font-bold py-3 px-8 rounded-lg 
-            cursor-not-allowed border border-gray-500">
+            <button disabled class="w-full md:w-auto bg-brand-border text-brand-text-muted font-bold py-3 px-8 rounded-lg 
+            cursor-not-allowed border border-brand-text-muted">
                 Lainaus vaatii kirjautumisen
             </button>
             {% endif %}

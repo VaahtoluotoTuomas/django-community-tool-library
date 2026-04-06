@@ -1,41 +1,14 @@
 {% extends 'tyokalut/base.html' %}
 
 {% block content %}
-        <h1 class="text-3xl font-extrabold text-white mb-6">Lainaamon työkalut</h1>
+        <h1 class="text-3xl font-extrabold text-brand-text-main mb-6">Lainaamon työkalut</h1>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             
             {% for tyokalu in tyokalut %}
-            <div class="bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl hover:shadow-blue-900/20 transition-all duration-300 border border-gray-700">
+            
+            {% include 'tyokalut/components/tool_card.html' with tyokalu=tyokalu %}
 
-                <div class="p-6">
-                    <div class="flex justify-between items-start mb-2">
-                        <h2 class="text-xl font-bold text-gray-100">{{ tyokalu.name }}</h2>
-                        <span class="text-sm font-medium text-gray-300 bg-gray-700 px-2 py-1 rounded border border-gray-600">
-                            {{ tyokalu.acquisition_year }}
-                        </span>
-                    </div>
-
-                    <p class="text-gray-400 text-sm mb-4 line-clamp-2">
-                        {{ tyokalu.description }}
-                    </p>
-
-                    <div class="mb-4">
-                        <span class="text-xs font-semibold text-gray-500 uppercase tracking-tight">Manufacturers:</span>
-                        <div class="flex flex-wrap gap-2 mt-1">
-                            {% for m in tyokalu.manufacturers.all %}
-                                <span class="bg-blue-900/30 text-blue-300 text-xs px-2 py-1 rounded-full border border-blue-800/50">
-                                    {{ m.name }}
-                                </span>
-                            {% endfor %}
-                        </div>
-                    </div>
-
-                    <a href="{% url 'tyokalu_tiedot' tyokalu.id %}" class="block text-center w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg transition-colors border border-blue-500 hover:border-blue-400">
-                        Lue lisää
-                    </a>
-                </div>
-            </div>
             {% endfor %}
 
         </div>

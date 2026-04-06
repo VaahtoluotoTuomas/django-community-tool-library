@@ -10,4 +10,5 @@ urlpatterns = [
     path('rekisteroidy/', views.rekisteroidy, name='rekisteroidy'),
     path('tyokalu/<int:tyokalu_id>/lainaa/', views.lainaa_tyokalu, name='lainaa_tyokalu'),
     path('omat-lainat/', views.omat_lainat, name='omat_lainat'),
+    path('palauta/<int:laina_id>/', views.palauta_tyokalu, name='palauta_tyokalu'),
 ]

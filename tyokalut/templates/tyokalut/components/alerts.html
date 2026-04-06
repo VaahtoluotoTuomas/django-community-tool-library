@@ -1,0 +1,34 @@
+{% if messages %}
+    <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-3 max-w-sm w-full">
+        {% for message in messages %}
+
+            <div class="toast-message transition-opacity duration-500 ease-in-out opacity-100 px-4 
+                py-3 rounded-lg shadow-2xl border text-brand-text-main text-sm font-medium flex items-center justify-between
+                {% if message.tags == 'success' %} bg-brand-success border-brand-success-light 
+                {% elif message.tags == 'error' %} bg-brand-danger border-brand-danger-light 
+                {% elif message.tags == 'warning' %} bg-brand-warning border-brand-warning 
+                {% else %} bg-brand-primary border-brand-primary-light {% endif %}
+            ">
+                {{ message }}
+            </div>
+            
+        {% endfor %}
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const toasts = document.querySelectorAll('.toast-message');
+            
+            toasts.forEach(function(toast) {
+                setTimeout(function() {
+                    toast.classList.remove('opacity-100');
+                    toast.classList.add('opacity-0');
+                    setTimeout(function() {
+                        toast.remove();
+                    }, 500); 
+                    
+                }, 5000);
+            });
+        });
+    </script>
+{% endif %}
