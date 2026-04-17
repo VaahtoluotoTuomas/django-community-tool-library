@@ -77,5 +77,5 @@ def palauta_tyokalu(request, laina_id):
 
 @login_required
 def omat_lainat(request):
-     lainat = Loan.objects.filter(user=request.user).order_by('-borrowed_at')
+     lainat = Loan.objects.select_related('tool').filter(user=request.user).order_by('-borrowed_at')
      return render(request, 'tyokalut/omat_lainat.html', {'lainat': lainat})
