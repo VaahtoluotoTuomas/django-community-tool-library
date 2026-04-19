@@ -37,6 +37,12 @@ class Loan(models.Model):
     due_date = models.DateTimeField()
     returned_at = models.DateTimeField(null=True, blank=True)
 
+    @property
+    def is_late(self):
+        if self.returned_at:
+            return False
+        return self.due_date < timezone.now()
+
     def __str__(self):
         return f"{self.tool.name} - {self.user.username}"
 
