@@ -7,25 +7,31 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from datetime import timedelta
 from django.contrib import messages
+from django.views.generic import ListView, DetailView
 
-def tyokalu_lista(request):
-    tyokalut = Tool.objects.all().prefetch_related('manufacturers', 'tags')
-    return render(request, 'tyokalut/lista.html', {'tyokalut': tyokalut})
+class TyokaluListView(ListView):
+    model = Tool
+    template_name = 'tyokalut/lista.html'
+    context_object_name = 'tyokalut'
 
-def tyokalu_tiedot(request, tyokalu_id):
-    tyokalu = get_object_or_404(Tool, id=tyokalu_id)
+    def get_queryset(self):
+        return Tool.objects.all().prefetch_related('manufacturers', 'tags')
 
-    aktiivinen_laina = Loan.objects.filter(tool=tyokalu, returned_at__isnull=True).first()
+class TyokaluDetailView(DetailView):
+    model = Tool
+    template_name = 'tyokalut/tiedot.html'
+    context_object_name = 'tyokalu'
+    pk_url_kwarg = 'tyokalu_id' 
 
-    on_vapaana = aktiivinen_laina is None
-
-    context = {
-        'tyokalu': tyokalu,
-        'on_vapaana': on_vapaana,
-        'aktiivinen_laina': aktiivinen_laina
-        }
-
-    return render(request, 'tyokalut/tiedot.html', context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        tyokalu = self.get_object()
+        
+        aktiivinen_laina = Loan.objects.filter(tool=tyokalu, returned_at__isnull=True).first()
+        
+        context['aktiivinen_laina'] = aktiivinen_laina
+        context['on_vapaana'] = aktiivinen_laina is None
+        return context
 
 def rekisteroidy(request):
     if request.method == 'POST':
