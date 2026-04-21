@@ -15,12 +15,23 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 class TyokaluListView(ListView):
     model = Tool
-    template_name = 'tyokalut/lista.html'
     context_object_name = 'tyokalut'
     paginate_by = 12
 
+    def get_template_names(self):
+        if self.request.headers.get('HX-Request'):
+            return ['tyokalut/partials/lista_tulokset.html']
+        return ['tyokalut/lista.html']
+
     def get_queryset(self):
-        return Tool.objects.all().prefetch_related('manufacturers', 'tags')
+        queryset = Tool.objects.all().prefetch_related('manufacturers', 'tags')
+    
+        hakusana = self.request.GET.get('q')
+        
+        if hakusana:
+            queryset = queryset.filter(name__icontains=hakusana)
+        return queryset
+            
 
 class TyokaluDetailView(DetailView):
     model = Tool

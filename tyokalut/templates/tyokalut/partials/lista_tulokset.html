@@ -1,0 +1,57 @@
+<style>
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in-up {
+        animation: fadeInUp 0.3s ease-out forwards;
+    }
+</style>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in-up">
+    {% for tyokalu in tyokalut %}
+        {% include 'tyokalut/components/tool_card.html' with tyokalu=tyokalu %}
+    {% empty %}
+        <div class="col-span-full text-center py-10">
+            <p class="text-brand-text-muted text-lg">Työkaluja ei löytynyt tällä hakusanalla.</p>
+        </div>
+    {% endfor %}
+</div>
+
+{% if is_paginated %}
+<div class="mt-10 mb-8 flex justify-center">
+    <nav class="inline-flex rounded-lg shadow-sm" aria-label="Pagination">
+        
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" 
+               hx-get="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"
+               hx-target="#hakutulokset"
+               class="px-4 py-2 border border-brand-border bg-brand-surface text-brand-text-main rounded-l-lg hover:bg-brand-surface-hover hover:text-brand-primary-light transition-colors font-semibold">
+                &larr; Edellinen
+            </a>
+        {% else %}
+            <span class="px-4 py-2 border border-brand-border bg-brand-bg text-brand-text-muted rounded-l-lg cursor-not-allowed font-semibold opacity-50">
+                &larr; Edellinen
+            </span>
+        {% endif %}
+
+        <span class="px-6 py-2 border-t border-b border-r border-brand-border bg-brand-bg text-brand-text-muted font-medium">
+            Sivu <strong class="text-brand-text-main">{{ page_obj.number }}</strong> / {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+             <a href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" 
+               hx-get="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"
+               hx-target="#hakutulokset"
+               class="px-4 py-2 border-t border-b border-r border-brand-border bg-brand-surface text-brand-text-main rounded-r-lg hover:bg-brand-surface-hover hover:text-brand-primary-light transition-colors font-semibold">
+                Seuraava &rarr;
+            </a>
+        {% else %}
+            <span class="px-4 py-2 border-t border-b border-r border-brand-border bg-brand-bg text-brand-text-muted rounded-r-lg cursor-not-allowed font-semibold opacity-50">
+                Seuraava &rarr;
+            </span>
+        {% endif %}
+
+    </nav>
+</div>
+{% endif %}

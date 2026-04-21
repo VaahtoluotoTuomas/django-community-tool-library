@@ -1,42 +1,29 @@
 {% extends 'tyokalut/base.html' %}
 
 {% block content %}
-        <h1 class="text-3xl font-extrabold text-brand-text-main mb-6">Lainaamon työkalut</h1>
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+        <h1 class="text-3xl font-extrabold text-brand-text-main">Lainaamon työkalut</h1>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            
-            {% for tyokalu in tyokalut %}
-            
-            {% include 'tyokalut/components/tool_card.html' with tyokalu=tyokalu %}
-
-            {% endfor %}
-
+        <div class="relative w-full md:w-72">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <svg class="w-5 h-5 text-brand-text-muted" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                </svg>
+            </div>
+            <input 
+            type="search"
+            name="q"
+            placeholder="Etsi työkaluja..."
+            class="block w-full p-3 pl-10 text-sm text-brand-text-main border border-brand-border rounded-lg bg-brand-surface focus:ring-brand-primary outline-none transition-colors"
+            hx-get="{% url 'tyokalu_lista' %}"
+            hx-trigger="keyup changed delay:300ms, search"
+            hx-target="#hakutulokset"
+            hx-push-url="true">
         </div>
+    </div>
 
-        {% if is_paginated %}
-        <div class="mt-10 mb-8 flex justify-center">
-            <nav class="inline-flex rounded-lg shadow-sm" aria-label="Pagination">
-
-                {% if page_obj.has_previous %}
-                    <a href="?page={{ page_obj.previous_page_number }}" class="px-4 py-2 border-brand-border bg-brand-surface text-brand-text-main rounded-l-lg hover:bg-brand-surface-hover hover:text-brand-primary-light transition-colors font-semibold">
-                        &larr; Edellinen
-                    </a>
-                {% else %}
-                    <span class="px-4 py-2 border border-brand-border bg-brand-bg text-brand-text-muted rounded-l-lg cursor-not-allowed font-semibold opacity-50">
-                        &larr; Edellinen
-                    </span>
-                {% endif %}
-
-                {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}" class="px-4 py-2 border-t border-b border-r border-brand-border bg-brand-surface text-brand-text-main rounded-r-lg hover:bg-brand-surface-hover hover:text-brand-primary-light transition-colors font-semibold">
-                        Seuraava &rarr;
-                    </a>
-                {% else %}
-                    <span class="px-4 py-2 border-t border-b border-r border-brand-border bg-brand-bg text-brand-text-muted rounded-r-lg cursor-not-allowed font-semibold opacity-50">
-                        Seuraava &rarr;
-                    </span>
-                {% endif %}
-            </nav>
-        </div>
-        {% endif %}
+    <div id="hakutulokset">
+        {% include 'tyokalut/partials/lista_tulokset.html' %}
+    </div>
+        
 {% endblock %}
