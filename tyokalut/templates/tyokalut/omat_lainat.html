@@ -24,4 +24,30 @@
 
     </div>
 </div>
+        {% if is_paginated %}
+        <div class="mt-10 mb-8 flex justify-center">
+            <nav class="inline-flex rounded-lg shadow-sm" aria-label="Pagination">
+
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}" class="px-4 py-2 border-brand-border bg-brand-surface text-brand-text-main rounded-l-lg hover:bg-brand-surface-hover hover:text-brand-primary-light transition-colors font-semibold">
+                        &larr; Edellinen
+                    </a>
+                {% else %}
+                    <span class="px-4 py-2 border border-brand-border bg-brand-bg text-brand-text-muted rounded-l-lg cursor-not-allowed font-semibold opacity-50">
+                        &larr; Edellinen
+                    </span>
+                {% endif %}
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}" class="px-4 py-2 border-t border-b border-r border-brand-border bg-brand-surface text-brand-text-main rounded-r-lg hover:bg-brand-surface-hover hover:text-brand-primary-light transition-colors font-semibold">
+                        Seuraava &rarr;
+                    </a>
+                {% else %}
+                    <span class="px-4 py-2 border-t border-b border-r border-brand-border bg-brand-bg text-brand-text-muted rounded-r-lg cursor-not-allowed font-semibold opacity-50">
+                        Seuraava &rarr;
+                    </span>
+                {% endif %}
+            </nav>
+        </div>
+        {% endif %}
 {% endblock %}

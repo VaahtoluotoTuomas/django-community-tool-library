@@ -17,6 +17,7 @@ class TyokaluListView(ListView):
     model = Tool
     template_name = 'tyokalut/lista.html'
     context_object_name = 'tyokalut'
+    paginate_by = 12
 
     def get_queryset(self):
         return Tool.objects.all().prefetch_related('manufacturers', 'tags')
@@ -36,6 +37,15 @@ class TyokaluDetailView(DetailView):
         context['aktiivinen_laina'] = aktiivinen_laina
         context['on_vapaana'] = aktiivinen_laina is None
         return context
+    
+class OmatLainatView(LoginRequiredMixin, ListView):
+    model = Loan
+    template_name = 'tyokalut/omat_lainat.html'
+    context_object_name = 'lainat'
+    paginate_by = 15
+
+    def get_queryset(self):
+        return Loan.objects.filter(user=self.request.user).order_by('-borrowed_at')
 
 class RekisteroidyView(CreateView):
     form_class = UserCreationForm
@@ -82,10 +92,4 @@ def palauta_tyokalu(request, laina_id):
              messages.success(request, f'Työkalu "{laina.tool.name}" palautettu onnistuneesti.')
     return redirect('omat_lainat')
     
-class OmatLainatView(LoginRequiredMixin, ListView):
-    model = Loan
-    template_name = 'tyokalut/omat_lainat.html'
-    context_object_name = 'lainat'
 
-    def get_queryset(self):
-        return Loan.objects.filter(user=self.request.user).order_by('-borrowed_at')
