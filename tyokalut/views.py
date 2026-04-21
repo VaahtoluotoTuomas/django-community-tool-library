@@ -8,6 +8,8 @@ from django.utils import timezone
 from datetime import timedelta
 from django.contrib import messages
 from django.views.generic import ListView, DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 class TyokaluListView(ListView):
     model = Tool
@@ -80,8 +82,10 @@ def palauta_tyokalu(request, laina_id):
              messages.success(request, f'Työkalu "{laina.tool.name}" palautettu onnistuneesti.')
     return redirect('omat_lainat')
     
+class OmatLainatView(LoginRequiredMixin, ListView):
+    model = Loan
+    template_name = 'tyokalut/omat_lainat.html'
+    context_object_name = 'lainat'
 
-@login_required
-def omat_lainat(request):
-     lainat = Loan.objects.select_related('tool').filter(user=request.user).order_by('-borrowed_at')
-     return render(request, 'tyokalut/omat_lainat.html', {'lainat': lainat})
+    def get_queryset(self):
+        return Loan.objects.filter(user=self.request.user).order_by('-borrowed_at')

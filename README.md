@@ -34,7 +34,7 @@ The project is moving towards a more interactive "Single Page App" feel by integ
 
 ### Phase 1: UX & Mobile Polishing (Upcoming)
 - [ ] **Mobile Navigation:** Implementation of a responsive "hamburger" menu using **Alpine.js**.
-- [ ] **Late Return Indicators:** Visual cues (Red color coding) for loans that have passed their due date.
+- [X] **Late Return Indicators:** Visual cues (Red color coding) for loans that have passed their due date.
 
 ### Phase 2: Interactivity with HTMX
 - [ ] **Instant Search:** A real-time search bar to find tools without page reloads.

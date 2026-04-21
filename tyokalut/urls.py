@@ -12,6 +12,6 @@ urlpatterns = [
     path('kirjaudu-ulos/', auth_views.LogoutView.as_view(), name='kirjaudu_ulos'),
     path('rekisteroidy/', views.rekisteroidy, name='rekisteroidy'),
     path('tyokalu/<int:tyokalu_id>/lainaa/', views.lainaa_tyokalu, name='lainaa_tyokalu'),
-    path('omat-lainat/', views.omat_lainat, name='omat_lainat'),
+    path('omat-lainat/', views.OmatLainatView.as_view(), name='omat_lainat'),
     path('palauta/<int:laina_id>/', views.palauta_tyokalu, name='palauta_tyokalu'),
 ] + debug_toolbar_urls()
