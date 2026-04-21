@@ -8,6 +8,8 @@ from django.utils import timezone
 from datetime import timedelta
 from django.contrib import messages
 from django.views.generic import ListView, DetailView
+from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
@@ -35,17 +37,27 @@ class TyokaluDetailView(DetailView):
         context['on_vapaana'] = aktiivinen_laina is None
         return context
 
-def rekisteroidy(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('tyokalu_lista')
-    else:
-            form = UserCreationForm()
-        
-    return render(request, 'tyokalut/rekisteroidy.html', {'form': form})
+class RekisteroidyView(CreateView):
+    form_class = UserCreationForm
+    template_name = 'tyokalut/rekisteroidy.html'
+    success_url = reverse_lazy('tyokalu_lista')
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        login(self.request, self.object)
+        return response
+
+#def rekisteroidy(request):
+#    if request.method == 'POST':
+#        form = UserCreationForm(request.POST)
+#        if form.is_valid():
+#            user = form.save()
+#            login(request, user)
+#            return redirect('tyokalu_lista')
+#    else:
+#            form = UserCreationForm()
+#        
+#    return render(request, 'tyokalut/rekisteroidy.html', {'form': form})
 
 @login_required
 def lainaa_tyokalu(request, tyokalu_id):
