@@ -47,18 +47,6 @@ class RekisteroidyView(CreateView):
         login(self.request, self.object)
         return response
 
-#def rekisteroidy(request):
-#    if request.method == 'POST':
-#        form = UserCreationForm(request.POST)
-#        if form.is_valid():
-#            user = form.save()
-#            login(request, user)
-#            return redirect('tyokalu_lista')
-#    else:
-#            form = UserCreationForm()
-#        
-#    return render(request, 'tyokalut/rekisteroidy.html', {'form': form})
-
 @login_required
 def lainaa_tyokalu(request, tyokalu_id):
     if request.method == 'POST':
