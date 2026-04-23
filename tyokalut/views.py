@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Tool, Loan
+from .models import Tool, Loan, Manufacturer, Tag
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.shortcuts import redirect
@@ -26,12 +26,25 @@ class TyokaluListView(ListView):
 
     def get_queryset(self):
         queryset = Tool.objects.all().prefetch_related('manufacturers', 'tags')
-    
-        hakusana = self.request.GET.get('q')
         
+        hakusana = self.request.GET.get('q')
+        merkki_id = self.request.GET.get('merkki')
+        tagi_id = self.request.GET.get('tagi')
+
         if hakusana:
             queryset = queryset.filter(name__icontains=hakusana)
-        return queryset
+        if merkki_id:
+            queryset = queryset.filter(manufacturers__id=merkki_id)
+        if tagi_id:
+            queryset = queryset.filter(tags__id=tagi_id)
+            
+        return queryset.distinct()
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['kaikki_merkit'] = Manufacturer.objects.all().order_by('name')
+        context['kaikki_tagit'] = Tag.objects.all().order_by('name')
+        return context
             
 
 class TyokaluDetailView(DetailView):

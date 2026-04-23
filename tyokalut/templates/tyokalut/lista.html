@@ -1,25 +1,72 @@
 {% extends 'tyokalut/base.html' %}
 
 {% block content %}
-    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-        <h1 class="text-3xl font-extrabold text-brand-text-main">Lainaamon työkalut</h1>
+    <div class="mb-8">
+        <h1 class="text-3xl font-extrabold text-brand-text-main mb-6">Lainaamon työkalut</h1>
 
-        <div class="relative w-full md:w-72">
-            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <svg class="w-5 h-5 text-brand-text-muted" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                </svg>
+        <form hx-get="{% url 'tyokalu_lista' %}" 
+              hx-target="#hakutulokset" 
+              hx-trigger="input delay:300ms, change"
+              hx-push-url="true"
+              class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-brand-surface p-5 rounded-xl shadow-sm border border-brand-border">
+
+            <div>
+                <label for="search-input" class="block text-sm font-semibold text-brand-text-muted mb-2">Etsi nimellä</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <svg class="w-5 h-5 text-brand-text-muted" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                        </svg>
+                    </div>
+                    <input 
+                        type="search"
+                        id="search-input"
+                        name="q"
+                        value="{{ request.GET.q }}"
+                        placeholder="Esim. porakone..."
+                        class="block w-full p-3 pl-10 text-sm text-brand-text-main border border-brand-border rounded-lg bg-brand-bg focus:ring-brand-primary outline-none transition-colors">
+                </div>
             </div>
-            <input 
-            type="search"
-            name="q"
-            placeholder="Etsi työkaluja..."
-            class="block w-full p-3 pl-10 text-sm text-brand-text-main border border-brand-border rounded-lg bg-brand-surface focus:ring-brand-primary outline-none transition-colors"
-            hx-get="{% url 'tyokalu_lista' %}"
-            hx-trigger="keyup changed delay:300ms, search"
-            hx-target="#hakutulokset"
-            hx-push-url="true">
-        </div>
+
+            <div>
+                <label for="merkki-select" class="block text-sm font-semibold text-brand-text-muted mb-2">Merkki</label>
+                <div class="relative">
+                    <select name="merkki" id="merkki-select" class="appearance-none cursor-pointer block w-full p-3 pr-10 text-sm text-brand-text-main border border-brand-border rounded-lg bg-brand-bg focus:ring-brand-primary outline-none transition-colors">
+                        <option value="">Kaikki merkit</option>
+                        {% for m in kaikki_merkit %}
+                            <option value="{{ m.id }}" {% if request.GET.merkki == m.id|stringformat:"s" %}selected{% endif %}>
+                                {{ m.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
+                        <svg class="w-4 h-4 text-brand-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <label for="tagi-select" class="block text-sm font-semibold text-brand-text-muted mb-2">Kategoria</label>
+                <div class="relative">
+                    <select name="tagi" id="tagi-select" class="appearance-none cursor-pointer block w-full p-3 pr-10 text-sm text-brand-text-main border border-brand-border rounded-lg bg-brand-bg focus:ring-brand-primary outline-none transition-colors">
+                        <option value="">Kaikki kategoriat</option>
+                        {% for t in kaikki_tagit %}
+                            <option value="{{ t.id }}" {% if request.GET.tagi == t.id|stringformat:"s" %}selected{% endif %}>
+                                {{ t.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
+                        <svg class="w-4 h-4 text-brand-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+        </form>
     </div>
 
     <div id="hakutulokset">
