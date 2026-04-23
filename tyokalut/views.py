@@ -12,6 +12,7 @@ from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
+from django.template.loader import render_to_string
 
 class TyokaluListView(ListView):
     model = Tool
@@ -102,6 +103,7 @@ def lainaa_tyokalu(request, tyokalu_id):
                 </button>
             </div>
             '''
+            html += render_to_string('tyokalut/partials/toast_oob.html', request=request)
             return HttpResponse(html)
 
         return redirect('tyokalu_tiedot', tyokalu_id=tyokalu.id)
@@ -119,8 +121,10 @@ def palauta_tyokalu(request, laina_id):
              messages.success(request, f'Työkalu "{laina.tool.name}" palautettu onnistuneesti.')
     
         if request.headers.get('HX-Request'):
-            return render(request, 'tyokalut/components/loan_row.html', {'laina': laina})
-
+            html = render_to_string('tyokalut/components/loan_row.html', {'laina': laina}, request=request)
+            html += render_to_string('tyokalut/partials/toast_oob.html', request=request)
+            return HttpResponse(html)
+        
     return redirect('omat_lainat')
     
 

@@ -1,0 +1,7 @@
+{% if messages %}
+<div id="toast-container" hx-swap-oob="beforeend">
+    {% for message in messages %}
+        {% include 'tyokalut/components/toast.html' %}
+    {% endfor %}
+</div>
+{% endif %}
