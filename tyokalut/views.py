@@ -11,7 +11,7 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.http import HttpResponse
 
 class TyokaluListView(ListView):
     model = Tool
@@ -72,7 +72,6 @@ class RekisteroidyView(CreateView):
 def lainaa_tyokalu(request, tyokalu_id):
     if request.method == 'POST':
         tyokalu = get_object_or_404(Tool, id=tyokalu_id)
-
         onko_lainassa = Loan.objects.filter(tool=tyokalu, returned_at__isnull=True).exists()
 
         if not onko_lainassa:
@@ -87,7 +86,24 @@ def lainaa_tyokalu(request, tyokalu_id):
         
         else:
             messages.error(request, 'Pahoittelut, työkalu ehti juuri mennä toiselle lainaajalle.')
-        
+
+        if request.headers.get('HX-Request'):
+            html = f'''
+            <div id="lainaustila-kontti" class="border-t border-brand-border-muted pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-brand-danger shadow-[0_0_8px_rgba(239,68,68,0.6)]"></span>
+                    <div class="flex flex-col">
+                        <span class="text-brand-danger-light font-semibold">Lainassa</span>
+                        <span class="text-brand-text-muted text-xs">Lainaaja: {request.user.username}</span>
+                    </div>
+                </div>
+                <button disabled class="w-full md:w-auto bg-brand-surface text-brand-text-muted font-bold py-3 px-8 rounded-lg cursor-not-allowed border border-brand-border opacity-60">
+                    Työkalu on jo lainassa
+                </button>
+            </div>
+            '''
+            return HttpResponse(html)
+
         return redirect('tyokalu_tiedot', tyokalu_id=tyokalu.id)
     
     return redirect('tyokalu_lista')
@@ -101,6 +117,10 @@ def palauta_tyokalu(request, laina_id):
              laina.returned_at = timezone.now()
              laina.save()
              messages.success(request, f'Työkalu "{laina.tool.name}" palautettu onnistuneesti.')
+    
+        if request.headers.get('HX-Request'):
+            return render(request, 'tyokalut/components/loan_row.html', {'laina': laina})
+
     return redirect('omat_lainat')
     
 

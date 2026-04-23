@@ -1,4 +1,4 @@
-<div class="flex flex-col md:flex-row justify-between items-start md:items-center p-4 rounded-lg border 
+<div id="laina-rivi-{{ laina.id }}" class="flex flex-col md:flex-row justify-between items-start md:items-center p-4 rounded-lg border 
     {% if laina.returned_at %}bg-brand-bg border-brand-border-muted{% else %}bg-brand-surface border-brand-primary-hover/30{% endif %}">
 
         <div class="mb-4 md:mb-0">
@@ -36,7 +36,7 @@
                         Lainassa
                     </span>
 
-                    <form method="post" action="{% url 'palauta_tyokalu' laina.id %}">
+                    <form hx-post="{% url 'palauta_tyokalu' laina.id %}" hx-target="#laina-rivi-{{ laina.id }}" hx-swap="outerHTML">
                         {% csrf_token %}
                         <button type="submit" class="bg-brand-surface-hover text-brand-text-main px-4 py-2 rounded-lg font-semibold border
                          border-brand-border hover:border-brand-primary-light hover:text-brand-primary-light transition-colors 
