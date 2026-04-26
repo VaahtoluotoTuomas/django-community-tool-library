@@ -1,0 +1,14 @@
+{% extends 'tyokalut/base.html' %}
+
+{% block content %}
+<div class="flex flex-col items-center justify-center py-20 text-center">
+    <h1 class="text-9xl font-extrabold text-white mb-4 drop-shadow-md opacity-90">404</h1>
+    <h2 class="text-3xl font-bold text-brand-text-main mb-6">Hups! Sivua ei löytynyt</h2>
+    <p class="text-brand-text-muted mb-8 max-w-md text-lg">
+        Etsimääsi sivua ei ole olemassa tai se on siirretty. Mutta älä huoli, Lainaamosta löytyy työkalu tähänkin hommaan!
+    </p>
+    <a href="{% url 'tyokalu_lista' %}" class="px-6 py-3 bg-brand-primary text-white rounded-lg font-semibold hover:bg-brand-primary-dark transition-colors shadow-md hover:shadow-lg">
+        Palaa etusivulle
+    </a>
+</div>
+{% endblock %}
