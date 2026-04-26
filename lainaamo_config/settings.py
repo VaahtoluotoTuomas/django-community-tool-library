@@ -94,7 +94,6 @@ DATABASES = {
         'PASSWORD': env('DB_PASSWORD'),
         'HOST': env('DB_HOST', default='127.0.0.1'),  
         'PORT': env('DB_PORT', default='3307'), 
-        'CONN_MAX_AGE': 600,
         'CONN_HEALTH_CHECKS': True,
     }
 }
@@ -137,40 +136,28 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-STORAGES = {
-    "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
-
 LOGIN_REDIRECT_URL = 'tyokalu_lista'
 LOGOUT_REDIRECT_URL = 'tyokalu_lista'
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
 
-if os.environ.get('AZURE_STORAGE_CONNECTION_STRING'):
+if not DEBUG:
+    # 1. TUOTANTO (Pilvessä, kun DEBUG on False)
     STORAGES = {
         "default": {
             "BACKEND": "storages.backends.azure_storage.AzureStorage",
         },
         "staticfiles": {
-            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
         },
     }
-    AZURE_CONNECTION_STRING = os.environ.get('AZURE_STORAGE_CONNECTION_STRING')
+    AZURE_CONNECTION_STRING = env('AZURE_STORAGE_CONNECTION_STRING')
     AZURE_CONTAINER = 'media'
-    AZURE_CUSTOM_DOMAIN = f'{os.environ.get("AZURE_STORAGE_ACCOUNT_NAME")}.blob.core.windows.net'
+    AZURE_CUSTOM_DOMAIN = f"{env('AZURE_STORAGE_ACCOUNT_NAME')}.blob.core.windows.net"
 else:
-    # Paikallinen kehitys (omalla koneella)
-    MEDIA_URL = '/media/'
+    # 2. PAIKALLINEN KEHITYS (Omalla koneella, kun DEBUG on True)
     STORAGES = {
         "default": {
             "BACKEND": "django.core.files.storage.FileSystemStorage",
@@ -179,3 +166,5 @@ else:
             "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
         },
     }
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

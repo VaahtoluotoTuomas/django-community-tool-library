@@ -23,8 +23,8 @@
     <nav class="inline-flex rounded-lg shadow-sm" aria-label="Pagination">
         
         {% if page_obj.has_previous %}
-            <a href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.merkki %}&merkki={{ request.GET.merkki }}{% endif %}{% if request.GET.tagi %}&tagi={{ request.GET.tagi }}{% endif %}" 
-               hx-get="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.merkki %}&merkki={{ request.GET.merkki }}{% endif %}{% if request.GET.tagi %}&tagi={{ request.GET.tagi }}{% endif %}"
+            <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.merkki %}&merkki={{ request.GET.merkki }}{% endif %}{% if request.GET.tagi %}&tagi={{ request.GET.tagi }}{% endif %}" 
+               hx-get="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.merkki %}&merkki={{ request.GET.merkki }}{% endif %}{% if request.GET.tagi %}&tagi={{ request.GET.tagi }}{% endif %}"
                hx-target="#hakutulokset"
                class="px-4 py-2 border border-brand-border bg-brand-surface text-brand-text-main rounded-l-lg hover:bg-brand-surface-hover hover:text-brand-primary-light transition-colors font-semibold">
                 &larr; Edellinen
@@ -41,9 +41,9 @@
 
         {% if page_obj.has_next %}
              <a href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.merkki %}&merkki={{ request.GET.merkki }}{% endif %}{% if request.GET.tagi %}&tagi={{ request.GET.tagi }}{% endif %}" 
-               hx-get="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.merkki %}&merkki={{ request.GET.merkki }}{% endif %}{% if request.GET.tagi %}&tagi={{ request.GET.tagi }}{% endif %}"
-               hx-target="#hakutulokset"
-               class="px-4 py-2 border-t border-b border-r border-brand-border bg-brand-surface text-brand-text-main rounded-r-lg hover:bg-brand-surface-hover hover:text-brand-primary-light transition-colors font-semibold">
+                hx-get="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.merkki %}&merkki={{ request.GET.merkki }}{% endif %}{% if request.GET.tagi %}&tagi={{ request.GET.tagi }}{% endif %}"
+                hx-target="#hakutulokset"
+                class="px-4 py-2 border-t border-b border-r border-brand-border bg-brand-surface text-brand-text-main rounded-r-lg hover:bg-brand-surface-hover hover:text-brand-primary-light transition-colors font-semibold">
                 Seuraava &rarr;
             </a>
         {% else %}

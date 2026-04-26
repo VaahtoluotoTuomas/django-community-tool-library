@@ -20,6 +20,8 @@ ENV SECRET_KEY="dummy-key-for-build-process-only"
 ENV DB_NAME="dummy"
 ENV DB_USER="dummy"
 ENV DB_PASSWORD="dummy"
+ENV AZURE_STORAGE_CONNECTION_STRING="dummy"
+ENV AZURE_STORAGE_ACCOUNT_NAME="dummy"
 
 RUN python manage.py collectstatic --noinput
 

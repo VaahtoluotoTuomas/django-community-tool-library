@@ -18,3 +18,5 @@ media/
 Thumbs.db
 
 .env
+
+deploy.sh
