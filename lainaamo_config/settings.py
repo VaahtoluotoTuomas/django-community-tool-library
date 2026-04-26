@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'tyokalut',
     'debug_toolbar',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -154,3 +155,27 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+if os.environ.get('AZURE_STORAGE_CONNECTION_STRING'):
+    STORAGES = {
+        "default": {
+            "BACKEND": "storages.backends.azure_storage.AzureStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }
+    AZURE_CONNECTION_STRING = os.environ.get('AZURE_STORAGE_CONNECTION_STRING')
+    AZURE_CONTAINER = 'media'
+    AZURE_CUSTOM_DOMAIN = f'{os.environ.get("AZURE_STORAGE_ACCOUNT_NAME")}.blob.core.windows.net'
+else:
+    # Paikallinen kehitys (omalla koneella)
+    MEDIA_URL = '/media/'
+    STORAGES = {
+        "default": {
+            "BACKEND": "django.core.files.storage.FileSystemStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }
