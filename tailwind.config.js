@@ -9,8 +9,8 @@ module.exports = {
         brand: {
           // SININEN: Pääväri (Linkit, perusnapit, korostukset)
           primary: {
-            DEFAULT: '#2563eb', // blue-600
-            hover: '#3b82f6',   // blue-500
+            DEFAULT: '#1d4ed8', // blue-700 (parempi kontrasti valkoista tekstiä vasten)
+            hover: '#2563eb',   // blue-600
             light: '#60a5fa',   // blue-400 (esim. aktiivisen tekstin väri)
             ultralight: '#93c5fd', // blue-300
             dark: '#1e40af',    // blue-800 (himmeät tausta)
@@ -19,14 +19,14 @@ module.exports = {
           success: {
             DEFAULT: '#16a34a', // green-600
             hover: '#22c55e',   // green-500
-            light: '#4ade80',   // green-400
+            light: '#86efac',   // green-300 (kirkkaampi, ylittää helposti 4.5:1 tummalla taustalla)
             dark: '#166534',    // green-800
           },
           // PUNAINEN: Vaara ja peruutukset (uloskirjautuminen, myöhässä, virheet)
           danger: {
             DEFAULT: '#dc2626', // red-600
             hover: '#ef4444',   // red-500
-            light: '#f87171',   // red-400
+            light: '#fca5a5',   // red-300 (kirkkaampi, ylittää helposti 4.5:1 tummalla taustalla)
             dark: '#991b1b',    // red-800
           },
           // KELTAINEN: Varoitukset (lähestyvä eräpäivä)
@@ -45,7 +45,7 @@ module.exports = {
           },
           text: {
             main: '#ffffff',    // text-white (pääotsikot)
-            muted: '#9ca3af',   // gray-400 (ohjetekstit, päivämäärät)
+            muted: '#d1d5db',   // gray-300 (ohjetekstit, päivämäärät, parempi kontrasti)
           }
         }
       }

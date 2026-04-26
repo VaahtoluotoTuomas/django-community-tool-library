@@ -31,7 +31,7 @@
 
         <div class="flex justify-between items-start mb-6">
             <h1 class="text-4xl font-extrabold text-brand-text-main">{{ tyokalu.name }}</h1>
-            <span class="text-lg font-medium text-brand-text-muted bg-brand-border-muted px-3 py-1 rounded border border-brand-border">
+            <span class="text-lg font-medium text-brand-text-main bg-brand-border-muted px-3 py-1 rounded border border-brand-border">
                 Hankittu: {{ tyokalu.acquisition_year }}
             </span>
         </div>
@@ -43,7 +43,7 @@
         <div class="flex flex-col md:flex-row gap-8 md:gap-16 mb-10">
     
             <div>
-                <h3 class="text-sm font-semibold text-brand-text-muted uppercase tracking-tight mb-2">Valmistajat:</h3>
+                <h2 class="text-sm font-semibold text-brand-text-muted uppercase tracking-tight mb-2">Valmistajat:</h2>
                 <div class="flex flex-wrap gap-2">
                     {% for m in tyokalu.manufacturers.all %}
                         {% include 'tyokalut/components/badge.html' with text=m.name %}
@@ -54,7 +54,7 @@
             </div>
 
             <div>
-                <h3 class="text-sm font-semibold text-brand-text-muted uppercase tracking-tight mb-2">Tagit:</h3>
+                <h2 class="text-sm font-semibold text-brand-text-muted uppercase tracking-tight mb-2">Tagit:</h2>
                 <div class="flex flex-wrap gap-2">
                     {% for t in tyokalu.tags.all %}
                         {% include 'tyokalut/components/badge.html' with text=t.name %}
