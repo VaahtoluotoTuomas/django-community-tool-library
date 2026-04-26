@@ -1,0 +1,51 @@
+name: Lainaamo CI/CD Pipeline
+
+# laukaisee putken pusketaan koodia main-haaraan
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Haetaan koodi
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Asennetaan Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # 3. Asennetaan testien riippuvuudet
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pytest pytest-django
+
+      # 4. PORTINVARTIJA: Ajetaan testit
+      - name: Run Pytest
+        env:
+          DJANGO_SETTINGS_MODULE: lainaamo_config.settings
+          SECRET_KEY: "dummy-key-for-testing-only"
+        run: |
+          pytest
+
+      # 5. Kirjaudutaan Azure Container Registryyn
+      # ajetaan vain, jos testit menevät läpi
+      - name: Log in to Azure Container Registry
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+
+      # 6. Rakennetaan ja pushataan Docker-image Azureen
+      - name: Build and Push Docker Image
+        run: |
+          docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/lainaamo-app:latest
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/lainaamo-app:latest
