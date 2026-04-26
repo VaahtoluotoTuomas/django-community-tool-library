@@ -10,7 +10,7 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script defer src="https://unpkg.com/htmx.org@1.9.10"></script>
 </head>
-<body class="bg-brand-bg min-h-screen">
+<body class="bg-brand-bg min-h-screen flex flex-col">
 
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 bg-brand-primary text-brand-text-main p-4 rounded-lg shadow-2xl font-bold focus:outline-none focus:ring-4 focus:ring-brand-primary-light">
         Hyppää suoraan sisältöön
@@ -24,9 +24,12 @@
         {% endfor %}
     </div>
 
-    <main id="main-content" class="container mx-auto px-4 pb-12 focus:outline-none" tabindex="-1">
+    <main id="main-content" class="container mx-auto px-4 pb-12 flex-grow focus:outline-none" tabindex="-1">
         {% block content %}
         {% endblock %}
     </main>
+
+    {% include 'tyokalut/components/footer.html' %}
+
 </body>
 </html>
