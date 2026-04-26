@@ -5,6 +5,16 @@
     [&_ul.errorlist]:text-brand-danger-light [&_ul.errorlist]:text-sm [&_ul.errorlist]:mt-1 
     [&_ul:not(.errorlist)]:text-brand-text-muted [&_ul:not(.errorlist)]:text-xs [&_ul:not(.errorlist)]:mt-1
     [&_span.helptext]:text-brand-text-muted [&_span.helptext]:text-xs [&_span.helptext]:block [&_span.helptext]:mt-1
+" x-data x-init="
+    $el.querySelectorAll('.errorlist').forEach((errorUl, index) => {
+        let input = errorUl.parentElement.querySelector('input, select, textarea');
+        if (input) {
+            let errorId = 'form-error-' + index;
+            errorUl.id = errorId;
+            input.setAttribute('aria-describedby', errorId);
+            input.setAttribute('aria-invalid', 'true');
+        }
+    });
 ">
     {{ form.as_p }}
 </div>

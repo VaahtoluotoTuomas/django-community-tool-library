@@ -4,13 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lainaamo</title>
+    <title>{% block title %}Lainaamo{% endblock %}</title>
     <meta name="description" content="Taloyhtiön yhteinen työkalu- ja välinelainaamo. Säästä tilaa ja luontoa lainaamalla työkalut naapurilta.">
     <link rel="stylesheet" href="{% static 'tyokalut/css/output.css' %}">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script defer src="https://unpkg.com/htmx.org@1.9.10"></script>
 </head>
 <body class="bg-brand-bg min-h-screen">
+
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 bg-brand-primary text-brand-text-main p-4 rounded-lg shadow-2xl font-bold focus:outline-none focus:ring-4 focus:ring-brand-primary-light">
+        Hyppää suoraan sisältöön
+    </a>
 
     {% include 'tyokalut/components/navbar.html' %}
 
@@ -20,7 +24,7 @@
         {% endfor %}
     </div>
 
-    <main class="container mx-auto px-4 pb-12">
+    <main id="main-content" class="container mx-auto px-4 pb-12 focus:outline-none" tabindex="-1">
         {% block content %}
         {% endblock %}
     </main>

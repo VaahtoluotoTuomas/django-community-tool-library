@@ -1,5 +1,7 @@
 {% extends 'tyokalut/base.html' %}
 
+{% block title %}{{ tyokalu.name }} | Lainaamo{% endblock %}
+
 {% block content %}
 <div class="max-w-4xl mx-auto mt-8">
     
@@ -66,7 +68,7 @@
             
         </div>
 
-        <div id ="lainaustila-kontti" class="border-t border-brand-border-muted pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div id ="lainaustila-kontti" class="border-t border-brand-border-muted pt-6 flex flex-col md:flex-row justify-between items-center gap-4" aria-live="polite">
             
             {% if on_vapaana %}
                 <div class="flex items-center gap-2">
