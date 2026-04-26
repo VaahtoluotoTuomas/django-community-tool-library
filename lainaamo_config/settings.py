@@ -87,13 +87,27 @@ WSGI_APPLICATION = 'lainaamo_config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
-    'default': env.db(
-        'DATABASE_URL', 
-        default=f"mysql://{env('DB_USER')}:{env('DB_PASSWORD')}@{env('DB_HOST', default='127.0.0.1')}:{env('DB_PORT', default='3306')}/{env('DB_NAME')}"
-    )
-}
+db_from_env = os.environ.get('DATABASE_URL')
 
+if db_from_env:
+    # Olemme Azuressa
+    DATABASES = {
+        'default': env.db_url_config(db_from_env)
+    }
+else:
+    # Olemme paikallisessa kehityksessä (oma kone)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': env('DB_NAME', default='lainaamo'),
+            'USER': env('DB_USER', default='root'),
+            'PASSWORD': env('DB_PASSWORD', default=''),
+            'HOST': env('DB_HOST', default='127.0.0.1'),
+            'PORT': env('DB_PORT', default='3306'),
+        }
+    }
+
+# Lisätään health check molemmissa tapauksissa
 DATABASES['default']['CONN_HEALTH_CHECKS'] = True
 
 
