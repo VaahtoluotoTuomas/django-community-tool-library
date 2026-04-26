@@ -27,11 +27,17 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt pytest pytest-django
 
-      # 4. PORTINVARTIJA: Ajetaan testit
+      # 4. PORTINVARTIJA: Ajetaan testit!
       - name: Run Pytest
         env:
           DJANGO_SETTINGS_MODULE: lainaamo_config.settings
           SECRET_KEY: "dummy-key-for-testing-only"
+          # Lisätään Djangon vaatimat tietokantamuuttujat (dummy-arvoilla)
+          DB_NAME: "dummy_db"
+          DB_USER: "dummy_user"
+          DB_PASSWORD: "dummy_password"
+          DB_HOST: "localhost"
+          DB_PORT: "3306"
         run: |
           pytest
 
