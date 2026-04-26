@@ -3,7 +3,9 @@
 {% block content %}
 <div class="max-w-4xl mx-auto mt-8">
     
-    <a href="{% url 'tyokalu_lista' %}" class="text-brand-primary-light hover:text-brand-primary-ultralight font-semibold transition-colors mb-6 inline-block">
+    <a href="{% url 'tyokalu_lista' %}" 
+    onclick="window.history.back(); return false;"
+    class="text-brand-primary-light hover:text-brand-primary-ultralight font-semibold transition-colors mb-6 inline-block">
         &larr; Takaisin listaukseen
     </a>
 
