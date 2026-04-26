@@ -88,16 +88,13 @@ WSGI_APPLICATION = 'lainaamo_config.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': env('DB_NAME'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('DB_PASSWORD'),
-        'HOST': env('DB_HOST', default='127.0.0.1'),  
-        'PORT': env('DB_PORT', default='3307'), 
-        'CONN_HEALTH_CHECKS': True,
-    }
+    'default': env.db(
+        'DATABASE_URL', 
+        default=f"mysql://{env('DB_USER')}:{env('DB_PASSWORD')}@{env('DB_HOST', default='127.0.0.1')}:{env('DB_PORT', default='3306')}/{env('DB_NAME')}"
+    )
 }
+
+DATABASES['default']['CONN_HEALTH_CHECKS'] = True
 
 
 # Password validation
