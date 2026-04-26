@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from datetime import timedelta
+from django.core.exceptions import ValidationError
 
 class Manufacturer(models.Model):
     name = models.CharField(max_length=100)
@@ -42,6 +43,24 @@ class Loan(models.Model):
     due_date = models.DateTimeField()
     returned_at = models.DateTimeField(null=True, blank=True, db_index=True)
 
+    def clean(self):
+        # Lisää tämä printti hetkeksi varmistaaksesi, että koodi käy täällä
+        print(f"\nDEBUG: Tarkistetaan työkalua {self.tool.name}, vapaana: {self.tool.is_available}")
+        
+        if self._state.adding and self.tool and not self.tool.is_available:
+            raise ValidationError("Tämä työkalu on jo lainassa.")
+
+    def save(self, *args, **kwargs):
+        # 1. Aseta oletuseräpäivä, jos se puuttuu uutta lainaa luodessa
+        if not self.id and not self.due_date:
+            self.due_date = timezone.now() + timedelta(days=14)
+            
+        # 2. Aja tarkistukset (tämä kutsuu clean-metodia)
+        self.clean() 
+        
+        # 3. Tallenna kantaan
+        super().save(*args, **kwargs)
+
     @property
     def is_late(self):
         if self.returned_at:
@@ -50,11 +69,6 @@ class Loan(models.Model):
 
     def __str__(self):
         return f"{self.tool.name} - {self.user.username}"
-
-    def save(self, *args, **kwargs):
-        if not self.id and not self.due_date:
-            self.due_date = timezone.now() + timedelta(days=14)
-        super().save(*args, **kwargs)
 
     class Meta:
         ordering = ['-borrowed_at']

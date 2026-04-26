@@ -168,3 +168,14 @@ else:
     }
     MEDIA_URL = '/media/'
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+    import sys
+
+# Jos ajetaan testejä (pytest tai django test), vaihdetaan tietokanta SQLiteen
+if 'test' in sys.argv or 'pytest' in sys.modules:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3_test',
+        }
+    }
