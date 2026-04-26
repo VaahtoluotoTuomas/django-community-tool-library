@@ -38,7 +38,8 @@ jobs:
           DB_PASSWORD: "dummy_password"
           DB_HOST: "localhost"
           DB_PORT: "3306"
-          AZURE_STORAGE_CONNECTION_STRING: "dummy"
+          AZURE_STORAGE_ACCOUNT_NAME: "dummyaccount"
+          AZURE_STORAGE_CONNECTION_STRING: "DefaultEndpointsProtocol=https;AccountName=dummyaccount;AccountKey=dummykey;EndpointSuffix=core.windows.net"
         run: |
           pytest
 
