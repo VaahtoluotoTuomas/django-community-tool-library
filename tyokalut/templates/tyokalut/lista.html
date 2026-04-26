@@ -24,14 +24,14 @@
                         name="q"
                         value="{{ request.GET.q }}"
                         placeholder="Esim. porakone..."
-                        class="block w-full p-3 pl-10 text-sm text-brand-text-main border border-brand-border rounded-lg bg-brand-bg focus:ring-brand-primary outline-none transition-colors">
+                        class="block w-full p-3 pl-10 text-sm text-brand-text-main border border-brand-border rounded-lg bg-brand-bg focus:ring-2 focus:ring-brand-primary focus:outline-none transition-colors">
                 </div>
             </div>
 
             <div>
                 <label for="merkki-select" class="block text-sm font-semibold text-brand-text-muted mb-2">Merkki</label>
                 <div class="relative">
-                    <select name="merkki" id="merkki-select" class="appearance-none cursor-pointer block w-full p-3 pr-10 text-sm text-brand-text-main border border-brand-border rounded-lg bg-brand-bg focus:ring-brand-primary outline-none transition-colors">
+                    <select name="merkki" id="merkki-select" class="appearance-none cursor-pointer block w-full p-3 pr-10 text-sm text-brand-text-main border border-brand-border rounded-lg bg-brand-bg focus:ring-2 focus:ring-brand-primary focus:outline-none transition-colors">
                         <option value="">Kaikki merkit</option>
                         {% for m in kaikki_merkit %}
                             <option value="{{ m.id }}" {% if request.GET.merkki == m.id|stringformat:"s" %}selected{% endif %}>
@@ -50,7 +50,7 @@
             <div>
                 <label for="tagi-select" class="block text-sm font-semibold text-brand-text-muted mb-2">Kategoria</label>
                 <div class="relative">
-                    <select name="tagi" id="tagi-select" class="appearance-none cursor-pointer block w-full p-3 pr-10 text-sm text-brand-text-main border border-brand-border rounded-lg bg-brand-bg focus:ring-brand-primary outline-none transition-colors">
+                    <select name="tagi" id="tagi-select" class="appearance-none cursor-pointer block w-full p-3 pr-10 text-sm text-brand-text-main border border-brand-border rounded-lg bg-brand-bg focus:ring-2 focus:ring-brand-primary focus:outline-none transition-colors">
                         <option value="">Kaikki kategoriat</option>
                         {% for t in kaikki_tagit %}
                             <option value="{{ t.id }}" {% if request.GET.tagi == t.id|stringformat:"s" %}selected{% endif %}>

@@ -3,7 +3,7 @@
 
         <div class="mb-4 md:mb-0">
             <h3 class="text-xl font-bold text-brand-text-main mb-1">
-                <a href="{% url 'tyokalu_tiedot' laina.tool.id %}" class="hover:text-brand-primary-light transition-colors">
+                <a href="{% url 'tyokalu_tiedot' laina.tool.id %}" class="hover:text-brand-primary-light transition-colors focus:outline-none focus:ring-2 focus:ring-brand-primary-light rounded">
                     {{ laina.tool.name }}
                 </a>
             </h3>
@@ -40,7 +40,7 @@
                         {% csrf_token %}
                         <button type="submit" class="bg-brand-surface-hover text-brand-text-main px-4 py-2 rounded-lg font-semibold border
                          border-brand-border hover:border-brand-primary-light hover:text-brand-primary-light transition-colors 
-                         text-sm shadow-sm hover:shadow-md">
+                         text-sm shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-brand-primary-light focus:ring-offset-1 focus:ring-offset-brand-surface">
                             Palauta
                         </button>
                     </form>

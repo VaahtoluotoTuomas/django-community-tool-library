@@ -24,30 +24,32 @@
         
         {% if page_obj.has_previous %}
             <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.merkki %}&merkki={{ request.GET.merkki }}{% endif %}{% if request.GET.tagi %}&tagi={{ request.GET.tagi }}{% endif %}" 
+               aria-label="Edellinen sivu"
                hx-get="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.merkki %}&merkki={{ request.GET.merkki }}{% endif %}{% if request.GET.tagi %}&tagi={{ request.GET.tagi }}{% endif %}"
                hx-target="#hakutulokset"
-               class="px-4 py-2 border border-brand-border bg-brand-surface text-brand-text-main rounded-l-lg hover:bg-brand-surface-hover hover:text-brand-primary-light transition-colors font-semibold">
+               class="px-4 py-2 border border-brand-border bg-brand-surface text-brand-text-main rounded-l-lg hover:bg-brand-surface-hover hover:text-brand-primary-light transition-colors font-semibold focus:outline-none focus:ring-2 focus:ring-brand-primary-light focus:z-10">
                 &larr; Edellinen
             </a>
         {% else %}
-            <span class="px-4 py-2 border border-brand-border bg-brand-bg text-brand-text-muted rounded-l-lg cursor-not-allowed font-semibold opacity-50">
+            <span class="px-4 py-2 border border-brand-border bg-brand-bg text-brand-text-muted rounded-l-lg cursor-not-allowed font-semibold opacity-50" aria-hidden="true">
                 &larr; Edellinen
             </span>
         {% endif %}
 
-        <span class="px-6 py-2 border-t border-b border-r border-brand-border bg-brand-bg text-brand-text-muted font-medium">
+        <span class="px-6 py-2 border-t border-b border-r border-brand-border bg-brand-bg text-brand-text-muted font-medium" aria-current="page">
             Sivu <strong class="text-brand-text-main">{{ page_obj.number }}</strong> / {{ page_obj.paginator.num_pages }}
         </span>
 
         {% if page_obj.has_next %}
              <a href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.merkki %}&merkki={{ request.GET.merkki }}{% endif %}{% if request.GET.tagi %}&tagi={{ request.GET.tagi }}{% endif %}" 
+                aria-label="Seuraava sivu"
                 hx-get="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.merkki %}&merkki={{ request.GET.merkki }}{% endif %}{% if request.GET.tagi %}&tagi={{ request.GET.tagi }}{% endif %}"
                 hx-target="#hakutulokset"
-                class="px-4 py-2 border-t border-b border-r border-brand-border bg-brand-surface text-brand-text-main rounded-r-lg hover:bg-brand-surface-hover hover:text-brand-primary-light transition-colors font-semibold">
+                class="px-4 py-2 border-t border-b border-r border-brand-border bg-brand-surface text-brand-text-main rounded-r-lg hover:bg-brand-surface-hover hover:text-brand-primary-light transition-colors font-semibold focus:outline-none focus:ring-2 focus:ring-brand-primary-light focus:z-10">
                 Seuraava &rarr;
             </a>
         {% else %}
-            <span class="px-4 py-2 border-t border-b border-r border-brand-border bg-brand-bg text-brand-text-muted rounded-r-lg cursor-not-allowed font-semibold opacity-50">
+            <span class="px-4 py-2 border-t border-b border-r border-brand-border bg-brand-bg text-brand-text-muted rounded-r-lg cursor-not-allowed font-semibold opacity-50" aria-hidden="true">
                 Seuraava &rarr;
             </span>
         {% endif %}

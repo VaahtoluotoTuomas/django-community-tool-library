@@ -2,11 +2,11 @@
     <div class="container mx-auto flex justify-between items-center">
         
         <a href="{% url 'tyokalu_lista' %}" class="text-2xl font-bold uppercase 
-        tracking-wider hover:text-brand-primary-light transition-colors">🛠️ Lainaamo</a>
+        tracking-wider hover:text-brand-primary-light transition-colors focus:outline-none focus:ring-2 focus:ring-brand-primary-light rounded">🛠️ Lainaamo</a>
         
         <div class="md:hidden flex items-center">
-            <button @click="open = !open" type="button" class="text-brand-text-muted hover:text-brand-text-main focus:outline-none">
-                <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <button @click="open = !open" type="button" aria-expanded="false" :aria-expanded="open.toString()" aria-label="Avaa päävalikko" class="text-brand-text-muted hover:text-brand-text-main focus:outline-none focus:ring-2 focus:ring-brand-primary-light rounded">
+                <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                     <path x-show="!open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     <path x-show="open" style="display: none;" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
@@ -18,30 +18,30 @@
             {% if user.is_authenticated %}
                 <span class="text-brand-text-muted text-sm hidden md:inline">Hei, <strong class="text-brand-text-main">
                     {{ user.username }}</strong>!</span>
-                <a href="{% url 'omat_lainat' %}" class="text-brand-primary-light hover:text-brand-primary-ultralight transition-colors text-sm font-bold">
+                <a href="{% url 'omat_lainat' %}" class="text-brand-primary-light hover:text-brand-primary-ultralight transition-colors text-sm font-bold focus:outline-none focus:ring-2 focus:ring-brand-primary-light rounded">
                     Omat lainat
                 </a>
             
                 <form method="POST" action="{% url 'kirjaudu_ulos' %}" class="inline m-0">
                     {% csrf_token %}
                     <button type="submit" class="bg-brand-border-muted hover:bg-brand-border-muted text-brand-text-muted hover:text-brand-text-main text-sm 
-                    font-bold py-2 px-4 rounded-lg transition-colors border border-brand-border">
+                    font-bold py-2 px-4 rounded-lg transition-colors border border-brand-border focus:outline-none focus:ring-2 focus:ring-brand-primary-light focus:ring-offset-2 focus:ring-offset-brand-surface">
                         Kirjaudu ulos
                     </button>
                 </form>
 
             {% else %}
                 <a href="{% url 'kirjaudu' %}" class="text-brand-text-muted hover:text-brand-text-main 
-                transition-colors text-sm font-medium">Kirjaudu</a>
+                transition-colors text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-primary-light rounded">Kirjaudu</a>
                 <a href="{% url 'rekisteroidy' %}" class="bg-brand-primary hover:bg-brand-primary-hover
-                    text-brand-text-main text-sm font-bold py-2 px-4 rounded-lg transition-colors border border-brand-primary-hover">
+                    text-brand-text-main text-sm font-bold py-2 px-4 rounded-lg transition-colors border border-brand-primary-hover focus:outline-none focus:ring-2 focus:ring-brand-primary-light focus:ring-offset-2 focus:ring-offset-brand-surface">
                 Rekisteröidy
                 </a>
             {% endif %}
 
             {% if user.is_staff %}
             <div class="border-l border-brand-border pl-4 ml-2">
-                <a href="/admin" class="text-brand-text-muted hover:text-brand-text-main text-sm font-medium transition-colors">
+                <a href="/admin" class="text-brand-text-muted hover:text-brand-text-main text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-brand-primary-light rounded">
                     Ylläpito
                 </a>
             </div>
@@ -62,24 +62,24 @@
 
         {% if user.is_authenticated %}
             <div class="text-brand-text-muted text-sm pb-2 border-b border-brand-border-muted">Hei, <strong class="text-brand-text-main">{{ user.username }}</strong>!</div>
-            <a href="{% url 'omat_lainat' %}" class="block text-brand-primary-light hover:text-brand-primary-ultralight transition-colors font-bold">Omat lainat</a>
+            <a href="{% url 'omat_lainat' %}" class="block text-brand-primary-light hover:text-brand-primary-ultralight transition-colors font-bold focus:outline-none focus:ring-2 focus:ring-brand-primary-light rounded">Omat lainat</a>
             
             <form method="POST" action="{% url 'kirjaudu_ulos' %}" class="block mt-2">
                 {% csrf_token %}
-                <button type="submit" class="w-full text-left bg-brand-border-muted hover:bg-brand-border-muted text-brand-text-muted hover:text-brand-text-main font-bold py-2 px-4 rounded-lg transition-colors border border-brand-border">
+                <button type="submit" class="w-full text-left bg-brand-border-muted hover:bg-brand-border-muted text-brand-text-muted hover:text-brand-text-main font-bold py-2 px-4 rounded-lg transition-colors border border-brand-border focus:outline-none focus:ring-2 focus:ring-brand-primary-light focus:ring-offset-2 focus:ring-offset-brand-surface">
                     Kirjaudu ulos
                 </button>
             </form>
         {% else %}
-            <a href="{% url 'kirjaudu' %}" class="block text-brand-text-muted hover:text-brand-text-main transition-colors font-medium">Kirjaudu</a>
-            <a href="{% url 'rekisteroidy' %}" class="block text-center bg-brand-primary hover:bg-brand-primary-hover text-brand-text-main font-bold py-2 px-4 rounded-lg transition-colors border border-brand-primary-hover mt-2">
+            <a href="{% url 'kirjaudu' %}" class="block text-brand-text-muted hover:text-brand-text-main transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-brand-primary-light rounded">Kirjaudu</a>
+            <a href="{% url 'rekisteroidy' %}" class="block text-center bg-brand-primary hover:bg-brand-primary-hover text-brand-text-main font-bold py-2 px-4 rounded-lg transition-colors border border-brand-primary-hover mt-2 focus:outline-none focus:ring-2 focus:ring-brand-primary-light focus:ring-offset-2 focus:ring-offset-brand-surface">
                 Rekisteröidy
             </a>
         {% endif %}
 
         {% if user.is_staff %}
         <div class="pt-2 border-t border-brand-border-muted mt-2">
-            <a href="/admin" class="block text-brand-text-muted hover:text-brand-text-main font-medium transition-colors">Ylläpito</a>
+            <a href="/admin" class="block text-brand-text-muted hover:text-brand-text-main font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-brand-primary-light rounded">Ylläpito</a>
         </div>
         {% endif %}
     </div>

@@ -15,7 +15,7 @@
                 <div class="text-center py-8">
                     <p class="text-brand-text-muted text-lg mb-4">Et ole vielä lainannut yhtään työkalua.</p>
                     <a href="{% url 'tyokalu_lista' %}" class="inline-block bg-brand-primary hover:bg-brand-primary-hover text-brand-text-main 
-                    font-bold py-2 px-6 rounded-lg transition-colors">
+                    font-bold py-2 px-6 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-brand-primary-light focus:ring-offset-2 focus:ring-offset-gray-800">
                         Selaa työkaluja
                     </a>
                 </div>
@@ -29,21 +29,21 @@
             <nav class="inline-flex rounded-lg shadow-sm" aria-label="Pagination">
 
                 {% if page_obj.has_previous %}
-                    <a href="?page={{ page_obj.previous_page_number }}" class="px-4 py-2 border-brand-border bg-brand-surface text-brand-text-main rounded-l-lg hover:bg-brand-surface-hover hover:text-brand-primary-light transition-colors font-semibold">
+                    <a href="?page={{ page_obj.previous_page_number }}" aria-label="Edellinen sivu" class="px-4 py-2 border-brand-border bg-brand-surface text-brand-text-main rounded-l-lg hover:bg-brand-surface-hover hover:text-brand-primary-light transition-colors font-semibold focus:outline-none focus:ring-2 focus:ring-brand-primary-light focus:z-10">
                         &larr; Edellinen
                     </a>
                 {% else %}
-                    <span class="px-4 py-2 border border-brand-border bg-brand-bg text-brand-text-muted rounded-l-lg cursor-not-allowed font-semibold opacity-50">
+                    <span class="px-4 py-2 border border-brand-border bg-brand-bg text-brand-text-muted rounded-l-lg cursor-not-allowed font-semibold opacity-50" aria-hidden="true">
                         &larr; Edellinen
                     </span>
                 {% endif %}
 
                 {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}" class="px-4 py-2 border-t border-b border-r border-brand-border bg-brand-surface text-brand-text-main rounded-r-lg hover:bg-brand-surface-hover hover:text-brand-primary-light transition-colors font-semibold">
+                    <a href="?page={{ page_obj.next_page_number }}" aria-label="Seuraava sivu" class="px-4 py-2 border-t border-b border-r border-brand-border bg-brand-surface text-brand-text-main rounded-r-lg hover:bg-brand-surface-hover hover:text-brand-primary-light transition-colors font-semibold focus:outline-none focus:ring-2 focus:ring-brand-primary-light focus:z-10">
                         Seuraava &rarr;
                     </a>
                 {% else %}
-                    <span class="px-4 py-2 border-t border-b border-r border-brand-border bg-brand-bg text-brand-text-muted rounded-r-lg cursor-not-allowed font-semibold opacity-50">
+                    <span class="px-4 py-2 border-t border-b border-r border-brand-border bg-brand-bg text-brand-text-muted rounded-r-lg cursor-not-allowed font-semibold opacity-50" aria-hidden="true">
                         Seuraava &rarr;
                     </span>
                 {% endif %}
