@@ -15,7 +15,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 from django.utils.cache import patch_vary_headers
+from django.views.decorators.cache import never_cache
+from django.utils.decorators import method_decorator
 
+@method_decorator(never_cache, name='dispatch')
 class TyokaluListView(ListView):
     model = Tool
     context_object_name = 'tyokalut'
