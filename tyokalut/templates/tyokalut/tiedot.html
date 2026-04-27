@@ -31,9 +31,11 @@
             
         </div>
 
-        <div class="flex justify-between items-start mb-6">
-            <h1 class="text-4xl font-extrabold text-brand-text-main">{{ tyokalu.name }}</h1>
-            <span class="text-lg font-medium text-brand-text-main bg-brand-border-muted px-3 py-1 rounded border border-brand-border">
+        <div class="flex flex-col md:flex-row md:justify-between items-start md:items-center gap-4 mb-6">
+            <h1 class="text-4xl font-extrabold text-brand-text-main break-words hyphens-auto w-full">
+                {{ tyokalu.name|safe }}
+            </h1>
+            <span class="shrink-0 text-lg font-medium text-brand-text-main bg-brand-border-muted px-3 py-1 rounded border border-brand-border">
                 Hankittu: {{ tyokalu.acquisition_year }}
             </span>
         </div>
