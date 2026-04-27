@@ -9,7 +9,7 @@ The project focuses on a high-end user experience, performance optimization, and
 
 ## 📸 Screenshots / Showcase
 
-![Lainaamo Front Page](https://github.com/user-attachments/assets/a73900a9-740a-4ee4-938d-a842b256c172)
+![Lainaamo Front Page](https://github.com/user-attachments/assets/096a20a4-7ec7-4ac2-bee8-fd0c2905af5a)
 *Dynamic tool search and filtering without full-page reloads, powered by HTMX.*
 
 ![Lainaamo Loan UI](https://github.com/user-attachments/assets/4ca52095-1bb2-4317-8b6c-c272aae264b2)
