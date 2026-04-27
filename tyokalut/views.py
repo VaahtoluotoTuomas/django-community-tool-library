@@ -91,12 +91,9 @@ def lainaa_tyokalu(request, tyokalu_id):
         onko_lainassa = Loan.objects.filter(tool=tyokalu, returned_at__isnull=True).exists()
 
         if not onko_lainassa:
-            erapaiva = timezone.now() + timedelta(days=14)
-
             Loan.objects.create(
                 user=request.user,
                 tool=tyokalu,
-                due_date=erapaiva
             )
             messages.success(request, f'Työkalu "{tyokalu.name}" lainattu! Löydät sen Omat lainat -sivulta.')
         
