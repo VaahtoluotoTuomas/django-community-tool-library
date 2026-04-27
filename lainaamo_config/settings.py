@@ -181,8 +181,6 @@ else:
     MEDIA_URL = '/media/'
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-    import sys
-
 # Jos ajetaan testejä (pytest tai django test), vaihdetaan tietokanta SQLiteen
 if 'test' in sys.argv or 'pytest' in sys.modules:
     DATABASES = {
@@ -190,6 +188,16 @@ if 'test' in sys.argv or 'pytest' in sys.modules:
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': BASE_DIR / 'db.sqlite3_test',
         }
+    }
+    # Pakotetaan testit käyttämään yksinkertaista tallennusta, jotta puuttuvat
+    # staattiset tiedostot (kuten favicon) eivät kaada testejä.
+    STORAGES = {
+        "default": {
+            "BACKEND": "django.core.files.storage.FileSystemStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
     }
 
 LOGGING = {
