@@ -27,6 +27,7 @@
                aria-label="Edellinen sivu"
                hx-get="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.merkki %}&merkki={{ request.GET.merkki }}{% endif %}{% if request.GET.tagi %}&tagi={{ request.GET.tagi }}{% endif %}"
                hx-target="#hakutulokset"
+               hx-push-url="true"
                class="px-4 py-2 border border-brand-border bg-brand-surface text-brand-text-main rounded-l-lg hover:bg-brand-surface-hover hover:text-brand-primary-light transition-colors font-semibold focus:outline-none focus:ring-2 focus:ring-brand-primary-light focus:z-10">
                 &larr; Edellinen
             </a>
@@ -45,6 +46,7 @@
                 aria-label="Seuraava sivu"
                 hx-get="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.merkki %}&merkki={{ request.GET.merkki }}{% endif %}{% if request.GET.tagi %}&tagi={{ request.GET.tagi }}{% endif %}"
                 hx-target="#hakutulokset"
+                hx-push-url="true"
                 class="px-4 py-2 border-t border-b border-r border-brand-border bg-brand-surface text-brand-text-main rounded-r-lg hover:bg-brand-surface-hover hover:text-brand-primary-light transition-colors font-semibold focus:outline-none focus:ring-2 focus:ring-brand-primary-light focus:z-10">
                 Seuraava &rarr;
             </a>
