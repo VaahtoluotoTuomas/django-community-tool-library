@@ -1,10 +1,23 @@
 # Lainaamo - Community Tool Library
 
+**🚀 Live Demo: [Lainaamo Live App](http://lainaamo2026.swedencentral.azurecontainer.io:8000/)**
+*(Note: The live demo is hosted temporarily for review purposes.)*
+
 Lainaamo is a modern, web-based tool-sharing platform built with Django. It’s designed for communities, housing associations, or maker spaces to manage a shared inventory of tools, allowing users to browse, borrow, and track their loans in real-time.
 
 The project focuses on a high-end user experience, performance optimization, and a robust, scalable cloud architecture.
 
-## Current Project State
+## 📸 Screenshots / Showcase
+
+![Lainaamo Front Page]([https://github.com/user-attachments/assets/a73900a9-740a-4ee4-938d-a842b256c172"])
+*Dynamic tool search and filtering without full-page reloads, powered by HTMX.*
+
+![Lainaamo Loan UI]([https://github.com/user-attachments/assets/4ca52095-1bb2-4317-8b6c-c272aae264b2])
+*Real-time, accessible toast notifications and inline state updates via Alpine.js and HTMX.*
+
+---
+
+## 🎯 Current Project State
 
 Lainaamo is a fully featured, production-ready application. It leverages modern "Hypermedia" patterns to provide a snappy, single-page app (SPA) feel while maintaining a clean and maintainable Django backend. The deployment process is highly automated, utilizing continuous integration and Infrastructure as Code principles.
 
@@ -82,6 +95,12 @@ Lainaamo is a fully featured, production-ready application. It leverages modern 
    ```
    *Note: Local development defaults to `FileSystemStorage` for media. Azure Blob Storage requires specific environment variables to be configured and `DEBUG` set to `False`.*
 
+7. **Run the automated tests:**
+   To verify that everything is working correctly, run the test suite:
+   ```bash
+   pytest
+   ```
+
 ---
 
 ## 🚀 Deployment
@@ -90,3 +109,11 @@ The project includes a robust deployment pipeline to Azure:
 
 1. **Continuous Integration:** Code pushed to the `main` branch triggers a **GitHub Actions** workflow that builds the Docker image and pushes it to Azure Container Registry.
 2. **Configuration Injection:** The repository includes a `deploy.example.sh` template. To deploy, copy this file to `deploy.sh` (which is gitignored), fill in your production secrets (such as the SSL-enforced `DATABASE_URL`), and run the script. It handles the final deployment to Azure Container Instances.
+
+---
+
+## 📬 Author & Contact
+
+**Tuomas Vaahtoluoto**
+* **GitHub:** [@VaahtoluotoTuomas](https://github.com/VaahtoluotoTuomas)
+* **LinkedIn:** [Tuomas Vaahtoluoto](https://linkedin.com/in/oman-profiilisi-tunnus-tahan)
