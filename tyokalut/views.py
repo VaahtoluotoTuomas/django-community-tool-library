@@ -92,15 +92,15 @@ class RekisteroidyView(CreateView):
         login(self.request, self.object)
         messages.success(self.request, "Käyttäjätunnus luotu onnistuneesti! Tervetuloa Lainaamoon.")
         return response
-
 @login_required
 def lainaa_tyokalu(request, tyokalu_id):
     if request.method == 'POST':
         tyokalu = get_object_or_404(Tool, id=tyokalu_id)
-        onko_lainassa = Loan.objects.filter(tool=tyokalu, returned_at__isnull=True).exists()
+        
+        aktiivinen_laina = Loan.objects.filter(tool=tyokalu, returned_at__isnull=True).first()
 
-        if not onko_lainassa:
-            Loan.objects.create(
+        if not aktiivinen_laina:
+            aktiivinen_laina = Loan.objects.create(
                 user=request.user,
                 tool=tyokalu,
             )
@@ -116,7 +116,7 @@ def lainaa_tyokalu(request, tyokalu_id):
                     <span class="w-3 h-3 rounded-full bg-brand-danger shadow-[0_0_8px_rgba(239,68,68,0.6)]"></span>
                     <div class="flex flex-col">
                         <span class="text-brand-danger-light font-semibold">Lainassa</span>
-                        <span class="text-brand-text-muted text-xs">Lainaaja: {request.user.username}</span>
+                        <span class="text-brand-text-muted text-xs">Lainaaja: {aktiivinen_laina.user.username}</span>
                     </div>
                 </div>
                 <button disabled class="w-full md:w-auto bg-brand-surface text-brand-text-muted font-bold py-3 px-8 rounded-lg cursor-not-allowed border border-brand-border opacity-60">
