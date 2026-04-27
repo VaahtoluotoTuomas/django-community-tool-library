@@ -1,0 +1,111 @@
+/* Django Admin Brändivärit - Tumma teema (Lainaamo) */
+
+/* Kohdistetaan kaikkiin teemoihin, jotta admin on aina tumma riippumatta OS-asetuksista */
+:root, [data-theme="light"], [data-theme="dark"] {
+    /* --- PÄÄTAUSTAT JA TEKSTI --- */
+    --body-bg: #111827;            /* brand.bg - Sivun tausta */
+    --body-fg: #f3f4f6;            /* text-gray-100 - Pääteksti */
+    --body-quiet-color: #d1d5db;   /* brand.text.muted - Himmeä teksti */
+    --body-loud-color: #ffffff;    /* brand.text.main - Otsikot */
+
+    /* --- PÄÄVÄRI JA YLÄPALKKI --- */
+    --primary: #1d4ed8;            /* brand.primary.DEFAULT */
+    --primary-fg: #ffffff;
+    
+    --header-bg: #1f2937;          /* brand.surface.DEFAULT - Yläpalkki */
+    --header-color: #ffffff;
+    --header-link-color: #ffffff;
+
+    /* --- BREADCRUMBS (Murupolut) --- */
+    --breadcrumbs-bg: #1f2937;     /* brand.surface.DEFAULT */
+    --breadcrumbs-fg: #d1d5db;
+    --breadcrumbs-link-fg: #ffffff;
+
+    /* --- LINKIT --- */
+    /* Käytetään 'light' ja 'ultralight' sävyjä, jotta kontrasti on hyvä tummalla pohjalla */
+    --link-fg: #60a5fa;            /* brand.primary.light */
+    --link-hover-color: #93c5fd;   /* brand.primary.ultralight */
+    --link-selected-fg: #60a5fa;
+
+    /* --- REUNUKSET JA MODUULIT --- */
+    --hairline-color: #374151;     /* brand.border.muted */
+    --border-color: #4b5563;       /* brand.border.DEFAULT */
+    
+    --darkened-bg: #1f2937;        /* brand.surface.DEFAULT - Kortit ja taulukot */
+    --selected-bg: #374151;        /* brand.surface.hover - Valittu rivi taulukossa */
+    --selected-row: #1e40af;       /* brand.primary.dark - Valintaruutu-korostus */
+
+    /* --- PAINIKKEET --- */
+    --button-bg: #1d4ed8;          /* brand.primary.DEFAULT */
+    --button-fg: #ffffff;
+    --button-hover-bg: #2563eb;    /* brand.primary.hover */
+    --default-button-bg: #374151;  /* brand.surface.hover - Neutraalit napit */
+    --default-button-hover-bg: #4b5563; /* brand.border.DEFAULT */
+
+    /* --- ILMOITUKSET JA STATUS (Käytetään tummempia taustoja ja vaaleaa tekstiä) --- */
+    --message-success-bg: #166534; /* brand.success.dark */
+    --message-success-color: #86efac; /* brand.success.light */
+    --message-warning-bg: #713f12; /* Tumma keltainen */
+    --message-warning-color: #fde047;
+    --message-error-bg: #991b1b;   /* brand.danger.dark */
+    --message-error-color: #fca5a5; /* brand.danger.light */
+
+    /* Lomakkeiden virheet */
+    --error-fg: #ef4444;           /* brand.danger.hover */
+}
+
+/* --- PIENET KORJAUKSET LOMAKKEISIIN JA TAULUKKOIHIN --- */
+
+/* Lomakekenttien (Input) tumma teema */
+input[type="text"], input[type="password"], input[type="email"], 
+input[type="url"], input[type="number"], input[type="tel"], 
+textarea, select, .vTextField {
+    background-color: #1f2937;     /* brand.surface.DEFAULT */
+    border: 1px solid #4b5563;     /* brand.border.DEFAULT */
+    color: #f3f4f6;
+}
+
+/* Korostus kun kenttä on valittuna */
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, 
+input[type="url"]:focus, input[type="number"]:focus, input[type="tel"]:focus, 
+textarea:focus, select:focus, .vTextField:focus {
+    border-color: #60a5fa;         /* brand.primary.light */
+}
+
+/* Moduulien otsikot (Esim. "Lainat", "Käyttäjät") */
+.module h2, .module caption, .inline-group h2 {
+    background: #1f2937;           /* brand.surface.DEFAULT */
+    color: #ffffff;
+}
+
+/* Taulukoiden sarakeotsikot */
+thead th {
+    background: #1f2937 !important;
+    color: #d1d5db !important;
+}
+
+/* Sivupalkki (Filters) */
+#changelist-filter {
+    background-color: #1f2937;
+    border-left: 1px solid var(--border-color);
+}
+
+#changelist-filter h2 {
+    background-color: #374151;     /* brand.surface.hover */
+    color: #ffffff;
+}
+
+/* "Lisää uusi" painike (esim. Lisää työkalu) vihreäksi kuten sivustollasi */
+.object-tools a.addlink {
+    background-color: #16a34a;     /* brand.success.DEFAULT */
+}
+.object-tools a.addlink:hover {
+    background-color: #22c55e;     /* brand.success.hover */
+}
+
+/* Tallennuslaatikon tausta sivun alalaidassa */
+.submit-row {
+    background: #1f2937 !important;
+    border: 1px solid var(--border-color) !important;
+}
+

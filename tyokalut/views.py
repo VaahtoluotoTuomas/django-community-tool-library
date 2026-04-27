@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 from django.utils import timezone
 from datetime import timedelta
 from django.contrib import messages
@@ -80,6 +81,7 @@ class RekisteroidyView(CreateView):
     def form_valid(self, form):
         response = super().form_valid(form)
         login(self.request, self.object)
+        messages.success(self.request, "Käyttäjätunnus luotu onnistuneesti! Tervetuloa Lainaamoon.")
         return response
 
 @login_required
@@ -132,6 +134,8 @@ def palauta_tyokalu(request, laina_id):
              laina.returned_at = timezone.now()
              laina.save()
              messages.success(request, f'Työkalu "{laina.tool.name}" palautettu onnistuneesti.')
+        else:
+             messages.info(request, f'Työkalu "{laina.tool.name}" oli jo palautettu.')
     
         if request.headers.get('HX-Request'):
             html = render_to_string('tyokalut/components/loan_row.html', {'laina': laina}, request=request)
