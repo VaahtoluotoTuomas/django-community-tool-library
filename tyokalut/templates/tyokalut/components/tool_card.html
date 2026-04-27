@@ -20,7 +20,7 @@
     <div class="p-6 flex flex-col flex-grow">
         <div class="flex justify-between items-start mb-2">
             <div>
-                <h2 class="text-xl font-bold text-brand-text-main">{{ tyokalu.name|safe }}</h2>
+                <h2 class="text-xl font-bold text-brand-text-main break-words hyphens-auto">{{ tyokalu.name|safe }}</h2>
 
                 <div class="flex items-center gap-1.5 mt-1">
                     {% if tyokalu.is_available %}
@@ -42,7 +42,7 @@
             </span>
         </div>
 
-        <p class="text-brand-text-muted text-sm line-clamp-2">
+        <p class="text-brand-text-muted text-sm line-clamp-2 break-words">
             {{ tyokalu.description }}
         </p>
 

@@ -2,9 +2,9 @@
     {% if laina.returned_at %}bg-brand-bg border-brand-border-muted{% else %}bg-brand-surface border-brand-primary-hover/30{% endif %}" aria-live="polite">
 
         <div class="mb-4 md:mb-0">
-            <h3 class="text-xl font-bold text-brand-text-main mb-1">
+            <h3 class="text-xl font-bold text-brand-text-main mb-1 break-words hyphens-auto">
                 <a href="{% url 'tyokalu_tiedot' laina.tool.id %}" class="hover:text-brand-primary-light transition-colors focus:outline-none focus:ring-2 focus:ring-brand-primary-light rounded">
-                    {{ laina.tool.name }}
+                    {{ laina.tool.name|safe }}
                 </a>
             </h3>
             <div class="text-sm text-brand-text-muted space-y-1">
