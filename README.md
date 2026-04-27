@@ -1,7 +1,7 @@
 # Lainaamo - Community Tool Library
 
 **🚀 Live Demo: [Lainaamo Live App](http://lainaamo2026.swedencentral.azurecontainer.io:8000/)**
-*(Note: The live demo is hosted temporarily for review purposes.)*
+*(Note: The live demo is hosted temporarily for review purposes. This temporary demo runs on HTTP without an SSL proxy to keep infrastructure complexity and costs minimal. Please do not enter real passwords or personal data.)*
 
 Lainaamo is a modern, web-based tool-sharing platform built with Django. It’s designed for communities, housing associations, or maker spaces to manage a shared inventory of tools, allowing users to browse, borrow, and track their loans in real-time.
 
