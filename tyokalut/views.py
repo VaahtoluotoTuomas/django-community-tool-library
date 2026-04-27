@@ -14,6 +14,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.template.loader import render_to_string
+from django.utils.cache import patch_vary_headers
 
 class TyokaluListView(ListView):
     model = Tool
@@ -46,6 +47,11 @@ class TyokaluListView(ListView):
         context['kaikki_merkit'] = Manufacturer.objects.all().order_by('name')
         context['kaikki_tagit'] = Tag.objects.all().order_by('name')
         return context
+    
+    def render_to_response(self, context, **response_kwargs):
+        response = super().render_to_response(context, **response_kwargs)
+        patch_vary_headers(response, ['HX-Request'])
+        return response
             
 
 class TyokaluDetailView(DetailView):
