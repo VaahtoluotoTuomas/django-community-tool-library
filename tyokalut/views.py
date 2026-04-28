@@ -67,7 +67,7 @@ class TyokaluDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         tyokalu = self.get_object()
         
-        aktiivinen_laina = Loan.objects.filter(tool=tyokalu, returned_at__isnull=True).first()
+        aktiivinen_laina = tyokalu.get_active_loan()
         
         context['aktiivinen_laina'] = aktiivinen_laina
         context['on_vapaana'] = aktiivinen_laina is None
@@ -92,12 +92,13 @@ class RekisteroidyView(CreateView):
         login(self.request, self.object)
         messages.success(self.request, "Käyttäjätunnus luotu onnistuneesti! Tervetuloa Lainaamoon.")
         return response
+
 @login_required
 def lainaa_tyokalu(request, tyokalu_id):
     if request.method == 'POST':
         tyokalu = get_object_or_404(Tool, id=tyokalu_id)
         
-        aktiivinen_laina = Loan.objects.filter(tool=tyokalu, returned_at__isnull=True).first()
+        aktiivinen_laina = tyokalu.get_active_loan()
 
         if not aktiivinen_laina:
             aktiivinen_laina = Loan.objects.create(
@@ -110,20 +111,7 @@ def lainaa_tyokalu(request, tyokalu_id):
             messages.error(request, 'Pahoittelut, työkalu ehti juuri mennä toiselle lainaajalle.')
 
         if request.headers.get('HX-Request'):
-            html = f'''
-            <div id="lainaustila-kontti" class="border-t border-brand-border-muted pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
-                <div class="flex items-center gap-2">
-                    <span class="w-3 h-3 rounded-full bg-brand-danger shadow-[0_0_8px_rgba(239,68,68,0.6)]"></span>
-                    <div class="flex flex-col">
-                        <span class="text-brand-danger-light font-semibold">Lainassa</span>
-                        <span class="text-brand-text-muted text-xs">Lainaaja: {aktiivinen_laina.user.username}</span>
-                    </div>
-                </div>
-                <button disabled class="w-full md:w-auto bg-brand-surface text-brand-text-muted font-bold py-3 px-8 rounded-lg cursor-not-allowed border border-brand-border opacity-60">
-                    Työkalu on jo lainassa
-                </button>
-            </div>
-            '''
+            html = render_to_string('tyokalut/partials/lainaustila_varattu.html', {'aktiivinen_laina': aktiivinen_laina}, request=request)
             html += render_to_string('tyokalut/partials/toast_oob.html', request=request)
             return HttpResponse(html)
 
@@ -149,5 +137,3 @@ def palauta_tyokalu(request, laina_id):
             return HttpResponse(html)
         
     return redirect('omat_lainat')
-    
-

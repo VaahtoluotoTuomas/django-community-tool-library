@@ -16,7 +16,6 @@ class Manufacturer(models.Model):
 
 class Tag(models.Model):
     name = models.CharField(max_length=50, verbose_name='Nimi')
-    # LISÄTTY: Mahdollisuus määritellä kategoriakohtainen laina-aika
     default_loan_days = models.PositiveIntegerField(
         default=14, 
         verbose_name='Oletuslaina-aika (päivää)',
@@ -44,6 +43,9 @@ class Tool(models.Model):
     @property
     def is_available(self):
         return not self.loan_set.filter(returned_at__isnull=True).exists()
+    
+    def get_active_loan(self):
+        return self.loan_set.filter(returned_at__isnull=True).first()
 
     class Meta:
         ordering = ['name']
