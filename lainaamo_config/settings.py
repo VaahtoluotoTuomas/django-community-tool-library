@@ -90,12 +90,10 @@ WSGI_APPLICATION = 'lainaamo_config.wsgi.application'
 db_from_env = os.environ.get('DATABASE_URL')
 
 if db_from_env:
-    # Olemme Azuressa
     DATABASES = {
         'default': env.db_url_config(db_from_env)
     }
 else:
-    # Olemme paikallisessa kehityksessä (oma kone)
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
@@ -107,7 +105,6 @@ else:
         }
     }
 
-# Lisätään health check molemmissa tapauksissa
 DATABASES['default']['CONN_HEALTH_CHECKS'] = True
 
 

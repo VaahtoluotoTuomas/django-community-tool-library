@@ -30,7 +30,7 @@ class TagAdmin(admin.ModelAdmin):
 class ToolAdmin(admin.ModelAdmin):
     list_display = ('name', 'acquisition_year')
     search_fields = ('name',)
-    list_filter = ('tags', 'manufacturers')  # Lisätty suodattimet sivupalkkiin
+    list_filter = ('tags', 'manufacturers')  
     filter_horizontal = ('manufacturers', 'tags')
 
 @admin.register(Loan)

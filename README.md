@@ -28,7 +28,7 @@ Lainaamo is a fully featured, production-ready application. It leverages modern 
 - **Decoupled Storage & Database:** - Media files (tool images) are served via **Azure Blob Storage**.
   - Persistent data is managed through a secure **Azure Database for MySQL Flexible Server** (with forced SSL connections).
 - **Pragmatic Testing Strategy:** Uses an in-memory SQLite database for blazing-fast automated test execution, while utilizing a Dockerized MySQL setup for local development to mirror the production environment.
-- **Performance Optimized:** Uses `prefetch_related` and `select_related` to eliminate N+1 query problems, ensuring sub-second response times.
+- **Performance Optimized:** Uses `prefetch_related` to eliminate N+1 query problems, ensuring sub-second response times.
 - **Mobile-First Design:** A fully responsive UI built with **Tailwind CSS** and **Alpine.js** for interactive components like the mobile navigation.
 
 ---

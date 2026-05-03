@@ -61,17 +61,13 @@ class Loan(models.Model):
     returned_at = models.DateTimeField(null=True, blank=True, db_index=True, verbose_name='Palautettu')
 
     def clean(self):
-        # Tarkistetaan onko työkalu vapaana vain uusia lainoja luotaessa
         if self._state.adding and self.tool and not self.tool.is_available:
             raise ValidationError("Tämä työkalu on jo lainassa.")
 
     def save(self, *args, **kwargs):
-        # LISÄTTY: Dynaaminen laina-ajan haku
         if not self.pk and not self.due_date:
-            loan_days = 14  # Globaali oletus, jos kategorialla ei ole määritelty aikaa
+            loan_days = 14
             
-            # Haetaan työkalun kategoriat. Jos niitä on useita, valitaan lyhyin laina-aika (varmuuden vuoksi)
-            # tai voit valita pisimmän (.order_by('-default_loan_days'))
             category_with_period = self.tool.tags.all().order_by('default_loan_days').first()
             
             if category_with_period:
